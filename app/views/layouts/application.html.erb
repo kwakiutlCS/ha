@@ -8,6 +8,23 @@
 </head>
 <body>
 
+<nav>
+  <% if signed_in? %>
+  Signed in as <%= current_user.name %>
+  <%= link_to "Sign out", user_session_path, method: :destroy %>
+  <% else %>
+  <%= link_to "Sign in", new_user_session_path %>
+  <%= link_to "Sign up", new_user_registration_path %>
+  <% end %>
+
+</nav>
+
+<% flash.each do |k,v| %>
+<p class=<%= k.to_s %>>
+  <%= v %>
+</p>
+<% end %>
+
 <%= yield %>
 
 </body>

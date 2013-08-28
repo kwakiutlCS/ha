@@ -21,6 +21,40 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'devise'
+
+group :test do
+      gem 'capybara'
+      gem 'cucumber-rails', :require => false
+      gem 'factory_girl_rails'
+      gem 'guard-rspec'
+      gem 'guard-cucumber'
+      gem 'database_cleaner'
+      gem 'rb-inotify', '~> 0.9'
+end
+
+group :development do
+      gem 'rspec-rails'
+      
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
