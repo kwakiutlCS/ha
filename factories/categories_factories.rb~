@@ -1,0 +1,11 @@
+FactoryGirl.define do
+  sequence :title do |n|
+    "title#{n}"
+  end
+  
+  factory :category do
+    title
+    user_id 1
+    transaction_type false
+  end
+end

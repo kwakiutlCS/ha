@@ -1,0 +1,32 @@
+require 'spec_helper'
+
+describe Transaction do
+  it {should respond_to :title}
+  it {should respond_to :user_id}
+  it {should respond_to :revenue?}
+  it {should respond_to :parent}
+  
+  let(:transaction) {FactoryGirl.create(:transaction)}
+  
+  describe "user_id" do
+    it "is not nil" 
+
+    
+  end
+  
+  describe "title" do
+    it "is unique for a user"
+    it "is not nil"
+  end
+
+  describe "parent" do
+    it "is not himself"
+ 
+  end
+
+  describe "revenue?" do
+    it "is not nil"
+ 
+  end
+
+end

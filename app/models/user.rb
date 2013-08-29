@@ -11,4 +11,24 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true, length: {minimum: 3}
   validates :email, presence: true, uniqueness: true 
+
+  has_many :categories, dependent: :destroy
+
+  after_create :add_initial_categories
+
+  private
+  def add_initial_categories
+    titles_expenses = ["health", "grocery", "clothing"] 
+    titles_revenues = ["paycheck",]
+    titles_expenses.each do |title|
+      c = self.categories.build(title: title, transaction_type: false)
+      c.save
+      
+    end
+    titles_revenues.each do |title|
+      c = self.categories.build(title: title, transaction_type: true)
+      c.save
+    end
+    
+  end
 end

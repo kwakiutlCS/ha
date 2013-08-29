@@ -1,0 +1,26 @@
+class Category < ActiveRecord::Base
+  attr_accessible :title, :transaction_type, :user_id
+
+  validates :title, presence: true
+  validates :transaction_type, presence: true
+  validates :user_id, presence: true
+  validate :not_similar_title
+
+  belongs_to :user
+
+  def not_similar_title
+    if title
+      user = User.find(user_id)
+      user.categories.each do |e|
+        if e.title.downcase.pluralize == title.downcase.pluralize && transaction_type == e.transaction_type 
+          errors.add(:name, "Category with similar name exists already")
+          return
+        end
+      end 
+    end
+  end
+
+  def capitalize_name
+    self.name = self.name.split.map{|i| i.capitalize}.join(" ")
+  end
+end

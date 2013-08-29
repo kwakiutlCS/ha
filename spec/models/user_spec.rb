@@ -3,6 +3,7 @@ require 'spec_helper'
 describe User do
   it {should respond_to(:name)}
   it {should respond_to(:email)}
+  it {should respond_to(:categories)}
 
 
   let(:user) {FactoryGirl.create(:user)}
@@ -15,9 +16,7 @@ describe User do
     end
 
     it "is unique" do
-      user.name = "palerma"
-      user.save
-      other = User.new(name: "palerma", email:"h@gh.pt", password: "password")
+      other = FactoryGirl.build(:user, name: user.name)
       other.should_not be_valid
     end
 
@@ -34,13 +33,20 @@ describe User do
     end
 
     it "is unique" do
-      user.email = "k@k.pt"
-      user.save
-      other = User.new(name: "palerma", email:"k@k.pt", password: "password")
+      other = FactoryGirl.build(:user, email: user.email)
       other.should_not be_valid
     end
 
     
+  end
+
+  describe "initial categories" do
+    it "has 4 initial categories" do
+      user.categories.count.should == 4
+    end
+    it "the first category is health" do
+      user.categories.first.title.should == "Health"
+    end
   end
 
   
