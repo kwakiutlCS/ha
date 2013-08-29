@@ -27,3 +27,7 @@ end
 When(/^I choose "(.*?)"$/) do |arg1|
   choose(arg1)
 end
+
+Then(/^I should be on the homepage$/) do
+  current_url.should == root_url
+end

@@ -1,0 +1,6 @@
+<section>
+  <%= @transactions.each do |t| %>
+  <%= t.value %>
+  <% end %>
+
+</section>

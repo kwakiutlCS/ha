@@ -1,0 +1,12 @@
+FactoryGirl.define do
+  factory :transaction do
+    value 7.59
+    association :user, factory: :user
+    association :category, factory: :category
+    description "my descripri"
+    date Date.today
+  end
+
+
+  
+end

@@ -1,0 +1,31 @@
+<%= form_for @transaction do |f| %>
+
+<p>
+<%= @transaction.errors.full_messages.each do |m| %>
+<%= m %>
+<% end %>
+</p>
+
+<p>
+<%= f.label :value_cents, "Value", min: 0, step: 0.01 %>
+<%= f.number_field :value_cents %>
+</p>
+
+<p>
+  <%= f.label :category %>
+  <%= f.text_field :category %>
+</p>
+
+<p>
+  <%= f.label :date %>
+  <%= f.text_field :date %>
+</p>
+
+<p>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+</p>
+
+<p><%= f.submit %></p>
+
+<% end %>
