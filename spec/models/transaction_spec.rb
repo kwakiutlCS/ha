@@ -9,6 +9,7 @@ describe Transaction do
 
 
   let(:transaction) {FactoryGirl.create(:transaction)}
+  let(:user) {User.find(transaction.user_id)}
 
   describe "value" do
 
@@ -48,5 +49,149 @@ describe Transaction do
       transaction.description = "012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678012345678a"
       transaction.should_not be_valid
     end 
+  end
+
+  describe "#value" do
+    it "has a \d+\.\d\d format" do
+      transaction.value_cents = 230
+      transaction.value.should == "$2.30"
+    end
+    it "has a \d+\.\d\d format" do
+      transaction.value_cents = 200
+      transaction.value.should == "$2.00"
+    end
+    it "has a \d+\.\d\d format" do
+      transaction.value_cents = 37
+      transaction.value.should == "$0.37"
+    end
+    
+  end
+
+
+  describe "self.createTransaction" do
+    it "has not a key 'value'" do
+      hash ={"value" => "3", "qty" => "4"}
+      result = Transaction.createTransaction(hash, user)
+      result.should_not include("value")
+    end
+
+    it "has not a key 'category'" do
+      hash ={"value" => "3", "qty" => "4", "category" => "Food"}
+      result = Transaction.createTransaction(hash, user)
+      result.should_not include("category")
+    end
+
+    it "has a key 'value_cents'" do
+      hash ={"value" => "3", "qty" => "4"}
+      result = Transaction.createTransaction(hash, user)
+      result.should include("value_cents")
+    end
+
+    describe "category" do
+      it "returns nil category_id for no category" do
+        hash ={"value" => "0.33", "qty" => "4", "category" => nil}
+        result = Transaction.createTransaction(hash, user)
+        result["category_id"].should == nil
+      end
+
+      it "returns the correct category capitalized" do
+        hash ={"value" => "0.33", "qty" => "4", "category" => "Grocery"}
+        result = Transaction.createTransaction(hash, user)
+        result["category_id"].should == 2
+      end
+      it "returns the correct category" do
+        hash ={"value" => "0.33", "qty" => "4", "category" => "grocery"}
+        result = Transaction.createTransaction(hash, user)
+        result["category_id"].should == 2
+      end
+      it "returns the correct category plural" do
+        hash ={"value" => "0.33", "qty" => "4", "category" => "groceries"}
+        result = Transaction.createTransaction(hash, user)
+        result["category_id"].should == 2
+      end
+    end
+
+    describe "conversion" do
+      it "deals with \d+.\d\d format" do
+        hash ={"value" => "0.33", "qty" => "4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "33"
+      end 
+      
+       it "deals with .\d\d format" do
+        hash ={"value"=>".33", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "33"
+      end 
+
+      it "deals with .\d format" do
+        hash ={"value"=>".3", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "30"
+      end 
+
+
+      it "deals with \d+.\d format" do
+        hash ={"value"=>"0,3", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "30"
+      end 
+
+      it "deals with \d+.\d\d format" do
+        hash ={"value" => "0,33", "qty" => "4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "33"
+      end 
+      
+       it "deals with .\d\d format" do
+        hash ={"value"=>",33", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "33"
+      end 
+
+      it "deals with .\d format" do
+        hash ={"value"=>",3", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "30"
+      end 
+
+
+      it "deals with \d+,\d format" do
+        hash ={"value"=>"0,3", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "30"
+      end 
+      
+      it "deals with \d+ format" do
+        hash ={"value"=>"34", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "3400"
+      end 
+
+      it "deals with multiple . format" do
+        hash ={"value"=>"34.0.2.5", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == nil
+      end 
+
+      it "deals with multiple , format" do
+        hash ={"value"=>"34,1,0", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == nil
+      end 
+
+      it "deals with multiple ., format" do
+        hash ={"value"=>"34.1,0", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == nil
+      end 
+
+       it "deals with multiple ,. format" do
+        hash ={"value"=>"34,1.0", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == nil
+      end 
+
+    end
   end
 end

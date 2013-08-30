@@ -2,7 +2,7 @@
 <table>
   <% @transactions.each do |t| %>
   <% if t.id != nil %>
-  <tr><td><%= t.value %></td><td><%= t.date %></td><td><%= t.category %></td></tr>
+  <tr><td><%= t.value %></td><td><%= t.date %></td><td><%= t.category.capitalize %></td></tr>
   <% end %>
   <% end %>
  </table>

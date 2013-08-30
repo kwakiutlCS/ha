@@ -1,0 +1,8 @@
+class RemoveDefaultDateTransaction < ActiveRecord::Migration
+  def up
+    change_column :transactions, :date, :date
+  end
+
+  def down
+  end
+end

@@ -6,8 +6,11 @@ class Transaction < ActiveRecord::Base
   validates :date, presence: true
   validates :description, length: {maximum: 255}
 
+  
   belongs_to :user
   belongs_to :category
+
+  after_initialize :set_defaults
 
   def value
     money = "$"+(value_cents/100.to_f).to_s
@@ -26,6 +29,53 @@ class Transaction < ActiveRecord::Base
     "None"
   end
 
+  def self.createTransaction(hash, user)
+    result = {}
+    hash.each do |k,v|
+      if k == "value" 
+        v = convertMoneyToCents(v)
+        result["value_cents"] = v
+      elsif k == "category"
+        if v
+          cat = user.categories.where(title: v.downcase.singularize)
+          result["category_id"] = cat.first.id if cat.count == 1
+        end
+      else
+        result[k] = v
+      end
+    end
+    result
+  end
   
-  
+
+  private
+  def set_defaults
+    self.date ||= Date.today
+  end
+
+  def self.convertMoneyToCents(v)
+    if v =~ /\..*\./ or v =~ /,.*,/ or v =~ /\..*,/ or v =~ /,.*\./ 
+      v = nil
+    elsif v =~ /\d*\.\d\d/
+      v = v.sub(".","")
+    elsif v =~ /\d*\.\d/
+      v = v.sub(".","")+"0"
+    elsif v =~ /\d+\./
+      v = v.sub(".","00")
+    elsif v =~ /\d*,\d\d/
+      v = v.sub(",","")
+    elsif v =~ /\d*,\d/
+      v = v.sub(",","")+"0"
+    elsif v =~ /\d+,/
+      v = v.sub(".","00")
+    elsif v =~ /\d+/
+      v = v+"00"
+    else
+      v = nil
+    end
+    while v != nil && v[0] == "0"
+      v = v[1,v.length-1]
+    end
+    v
+  end
 end

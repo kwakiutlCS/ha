@@ -3,11 +3,13 @@ class TransactionsController < ApplicationController
 
   def index
     @transactions = current_user.transactions
-    @transaction = current_user.transactions.new
+    @transaction = current_user.transactions.build
   end
 
   def create
-    transaction = current_user.transactions.build(params[:transaction])
+    transaction_hash = Transaction.createTransaction(params[:transaction], current_user)
+    p transaction_hash
+    transaction = current_user.transactions.build(transaction_hash)
 
     if transaction.save
       @transaction = current_user.transactions.build
@@ -17,7 +19,7 @@ class TransactionsController < ApplicationController
 
       flash[:alert] = "Record couldn't be saved"
       @transactions = current_user.transactions
-      @transaction = current_user.transactions.build
+      @transaction = transaction
       render :index
     end
   end

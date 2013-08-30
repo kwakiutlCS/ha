@@ -6,8 +6,7 @@ class Category < ActiveRecord::Base
   validates :transaction_type, inclusion: {in: [false, true]}
   validate :not_similar_title
 
-  before_save :capitalize_title
-
+  
   belongs_to :user 
 
   def not_similar_title
@@ -22,7 +21,5 @@ class Category < ActiveRecord::Base
     end
   end
 
-  def capitalize_title
-    self.title = self.title.split.map{|i| i.capitalize}.join(" ")
-  end
+  
 end

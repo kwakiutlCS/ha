@@ -45,7 +45,7 @@ describe User do
       user.categories.count.should == 4
     end
     it "the first category is health" do
-      user.categories.first.title.should == "Health"
+      user.categories.first.title.should == "health"
     end
   end
 
