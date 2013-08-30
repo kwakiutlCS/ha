@@ -2,7 +2,8 @@ class TransactionsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @transactions = current_user.transactions
+    @revenues = current_user.transactions.where(transaction_type: true)
+    @expenses = current_user.transactions.where(transaction_type: false)
     @transaction = current_user.transactions.build
   end
 
@@ -13,12 +14,16 @@ class TransactionsController < ApplicationController
 
     if transaction.save
       @transaction = current_user.transactions.build
-      @transactions = current_user.transactions
+      @revenues = current_user.transactions.where(transaction_type: true)
+      @expenses = current_user.transactions.where(transaction_type: false)
+    
       redirect_to transactions_path
     else
 
       flash[:alert] = "Record couldn't be saved"
-      @transactions = current_user.transactions
+      @revenues = current_user.transactions.where(transaction_type: true)
+      @expenses = current_user.transactions.where(transaction_type: false)
+    
       @transaction = transaction
       render :index
     end

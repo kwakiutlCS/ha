@@ -1,14 +1,44 @@
-<section>
+<div id="tabs">
+
+<ul>
+<li><a href="#expenses"><span>Revenues</span></a></li>
+<li><a href="#revenues"><span>Expenses</span></a></li>
+</ul>
+
+<section id="expenses">
+
+
 <table>
-  <% @transactions.each do |t| %>
+  <% @expenses.each do |t| %>
   <% if t.id != nil %>
-  <tr><td><%= t.value %></td><td><%= t.date %></td><td><%= t.category.capitalize %></td></tr>
+  <tr><td><%= t.value %></td><td><%= t.date.strftime("%B %d, %Y") %></td><td><%= t.category.capitalize %></td></tr>
   <% end %>
   <% end %>
  </table>
+
+
+<div>
+  <%= render "form_expenses" %>
+</div>
+
 </section>
 
-<section>
 
-<%= render "form" %>
+
+
+
+<section id="revenues">
+<table>
+  <% @revenues.each do |t| %>
+  <% if t.id != nil %>
+  <tr><td><%= t.value %></td><td><%= t.date.strftime("%B %d, %Y") %></td><td><%= t.category.capitalize %></td></tr>
+  <% end %>
+  <% end %>
+ </table>
+  
+<div>
+<%= render "form_revenues" %>
+</div>
 </section>
+
+</div>

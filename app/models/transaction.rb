@@ -1,11 +1,11 @@
 class Transaction < ActiveRecord::Base
-  attr_accessible :category_id, :currency, :date, :description, :user_id, :value_cents
+  attr_accessible :category_id, :currency, :date, :description, :user_id, :value_cents, :transaction_type
 
   validates :value_cents, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :user_id, presence: true
   validates :date, presence: true
   validates :description, length: {maximum: 255}
-
+  validates :transaction_type, inclusion: {in: [true, false]}
   
   belongs_to :user
   belongs_to :category

@@ -6,10 +6,17 @@ describe Transaction do
   it {should respond_to :category_id}
   it {should respond_to :description}
   it {should respond_to :date}
+  it {should respond_to :transaction_type}
 
 
   let(:transaction) {FactoryGirl.create(:transaction)}
   let(:user) {User.find(transaction.user_id)}
+
+  it "has a non nil transaction_type" do
+    transaction.transaction_type = nil
+    transaction.should_not be_valid
+  end
+
 
   describe "value" do
 

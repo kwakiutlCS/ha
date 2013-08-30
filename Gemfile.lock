@@ -90,6 +90,9 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.4)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.8.0)
     listen (0.7.3)
     lumberjack (1.0.2)
@@ -187,6 +190,7 @@ DEPENDENCIES
   guard-cucumber
   guard-rspec
   jquery-rails
+  jquery-ui-rails
   rails (= 3.2.13)
   rb-inotify (~> 0.9)
   rspec-rails
