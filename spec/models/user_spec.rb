@@ -40,14 +40,6 @@ describe User do
     
   end
 
-  describe "initial categories" do
-    it "has 4 initial categories" do
-      user.categories.count.should == 4
-    end
-    it "the first category is health" do
-      user.categories.first.title.should == "health"
-    end
-  end
-
+  
   
 end

@@ -2,22 +2,24 @@ class TransactionsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @revenues = current_user.transactions.where(transaction_type: true)
-    @expenses = current_user.transactions.where(transaction_type: false)
+    @revenues = current_user.transactions.where(transaction_type: true).order(:date)
+    @expenses = current_user.transactions.where(transaction_type: false).order(:date)
     @transaction = current_user.transactions.build
   end
 
   def create
     transaction_hash = Transaction.createTransaction(params[:transaction], current_user)
-    p transaction_hash
     transaction = current_user.transactions.build(transaction_hash)
 
     if transaction.save
       @transaction = current_user.transactions.build
       @revenues = current_user.transactions.where(transaction_type: true)
       @expenses = current_user.transactions.where(transaction_type: false)
-    
-      redirect_to transactions_path
+      
+      respond_to do |format|
+        format.html {redirect_to transactions_path}
+        format.js
+      end
     else
 
       flash[:alert] = "Record couldn't be saved"
@@ -25,7 +27,20 @@ class TransactionsController < ApplicationController
       @expenses = current_user.transactions.where(transaction_type: false)
     
       @transaction = transaction
-      render :index
+      respond_to do |format|
+        format.html {render :index}
+        format.js
+      end
+      
     end
+  end
+
+  def destroy
+    transaction = Transaction.find(params[:id])
+    transaction.destroy
+    @transaction = current_user.transactions.build
+    @revenues = current_user.transactions.where(transaction_type: true)
+    @expenses = current_user.transactions.where(transaction_type: false)
+    redirect_to transactions_path
   end
 end

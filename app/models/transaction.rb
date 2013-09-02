@@ -37,7 +37,7 @@ class Transaction < ActiveRecord::Base
         result["value_cents"] = v
       elsif k == "category"
         if v
-          cat = user.categories.where(title: v.downcase.singularize)
+          cat = user.categories.where(title: v.downcase).limit(1)
           result["category_id"] = cat.first.id if cat.count == 1
         end
       else

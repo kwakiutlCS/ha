@@ -2,4 +2,42 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#expenses_table, #revenues_table {
+	     position: relative;
+	     float: left;
+	     width: 40%;
+}
 
+.table_row {
+	    border: 1px dotted black;
+	    margin: 10px;
+	    line-height: 25px;
+	    cursor: pointer;
+}
+
+.table_data {
+	     display: inline-block;
+}
+
+.table_form {
+	    position: relative;
+	    float: right;
+}
+
+.table_row_header {
+		    
+}
+.table_row_description {
+		display:none;
+}
+
+
+.group:after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+	}
+* html .group             { zoom: 1; } /* IE6 */
+*:first-child+html .group { zoom: 1; } /* IE7 */

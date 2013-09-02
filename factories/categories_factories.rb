@@ -7,6 +7,6 @@ FactoryGirl.define do
     
     title
     transaction_type false
-    association :user, factory: :user
+    
   end
 end

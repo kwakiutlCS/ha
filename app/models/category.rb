@@ -1,25 +1,27 @@
 class Category < ActiveRecord::Base
-  attr_accessible :title, :transaction_type, :user_id
+  attr_accessible :title, :transaction_type
 
   validates :title, presence: true
-  validates :user_id, presence: true
   validates :transaction_type, inclusion: {in: [false, true]}
-  validate :not_similar_title
-
+  validate :title_uniqueness
   
-  belongs_to :user 
+  before_create :downcase_title
 
-  def not_similar_title
-    if title && user_id && transaction_type != nil
-      user = User.find(user_id)
-      user.categories.each do |e|
-        if e.title.downcase.pluralize == title.downcase.pluralize && transaction_type == e.transaction_type 
-          errors.add(:name, "Category with similar name exists already")
-          return
-        end
-      end 
-    end
+  private
+  def downcase_title
+    self.title = self.title.downcase
   end
+
+
+  def title_uniqueness
+    if self.title && self.transaction_type != nil
+      c = Category.where(title: self.title.downcase, transaction_type: self.transaction_type).limit(1).count
+      errors.add(:title, "duplicated") if c == 1
+    end
+    
+  end
+  
+  
 
   
 end

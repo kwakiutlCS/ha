@@ -94,6 +94,7 @@ describe Transaction do
       result.should include("value_cents")
     end
 
+
     describe "category" do
       it "returns nil category_id for no category" do
         hash ={"value" => "0.33", "qty" => "4", "category" => nil}
@@ -101,21 +102,15 @@ describe Transaction do
         result["category_id"].should == nil
       end
 
-      it "returns the correct category capitalized" do
-        hash ={"value" => "0.33", "qty" => "4", "category" => "Grocery"}
-        result = Transaction.createTransaction(hash, user)
-        result["category_id"].should == 2
-      end
-      it "returns the correct category" do
-        hash ={"value" => "0.33", "qty" => "4", "category" => "grocery"}
-        result = Transaction.createTransaction(hash, user)
-        result["category_id"].should == 2
-      end
-      it "returns the correct category plural" do
+      it "should return the correct category id" do
+        c = Category.create(title: "groceries", transaction_type: false)
+        CategoryMap.create(user_id: user.id, category_id: c.id)
         hash ={"value" => "0.33", "qty" => "4", "category" => "groceries"}
         result = Transaction.createTransaction(hash, user)
-        result["category_id"].should == 2
+        result["category_id"].should == 1
       end
+
+      
     end
 
     describe "conversion" do

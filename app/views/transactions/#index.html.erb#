@@ -12,7 +12,11 @@
   <% @expenses.each do |t| %>
   <% if t.id != nil %>
   <div class="table_row">
-    <div class="table_row_header"><div class="table_data"><%= t.value %></div><div class="table_data"><%= t.date.strftime("%B %d, %Y") %></div><div class="table_data"><%= t.category.capitalize %></div></div>
+    <div class="table_row_header">
+      <div class="table_data"><%= t.value %></div>
+      <div class="table_data"><%= t.date.strftime("%B %d, %Y") %></div>
+      <div class="table_data"><%= t.category.capitalize %></div>
+    </div>
     <div class="table_row_description">
       <%= link_to "delete", t, method: :delete %>
     </div>

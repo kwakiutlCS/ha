@@ -1,4 +1,4 @@
-<%= form_for @transaction, html: {id: "new_transaction_expense"}  do |f| %>
+<%= form_for @transaction, remote: true, html: {id: "new_transaction_expense"}  do |f| %>
 
 <p>
 <% @transaction.errors.full_messages.each do |m| %>
