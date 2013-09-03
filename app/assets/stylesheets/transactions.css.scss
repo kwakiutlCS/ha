@@ -5,19 +5,35 @@
 #expenses_table, #revenues_table {
 	     position: relative;
 	     float: left;
-	     width: 40%;
+	     width: 50%;
+	     
 }
 
 .table_row {
-	    border: 1px dotted black;
-	    margin: 10px;
 	    line-height: 25px;
-	    cursor: pointer;
+	    margin: 1px;
 }
 
 .table_data {
 	     display: inline-block;
+	     line-height: 20px;
+	     position: relative;
+	     text-align: center;
+	     padding: 3px 20px;
+	     
+}	     
+
+.date_data {
+	     width: 200px;
+	     text-align: left;
 }
+.category_data {
+	     margin-right: 10px;
+}
+.value_data {
+	     float: right;
+	     
+}	     	
 
 .table_form {
 	    position: relative;
@@ -25,10 +41,19 @@
 }
 
 .table_row_header {
-		    
+	cursor: pointer;
+	background: #2B2B2B;	    
+	color: #F2EFE4;
 }
 .table_row_description {
 		display:none;
+		height: 70px;
+}
+.links_data {
+	     position: relative;
+	     float: right;
+	     margin: 0 10px;
+	     text-align: center;
 }
 
 
@@ -41,3 +66,57 @@
 	}
 * html .group             { zoom: 1; } /* IE6 */
 *:first-child+html .group { zoom: 1; } /* IE7 */
+
+
+.menu {
+      width: 150px;
+      text-align: center;
+}
+
+#tabs {
+     position: relative;
+     float: both;
+     width: 80%;
+     margin: auto;
+     font-size: small;
+     }
+
+body {
+     background: #808CE9;
+     
+}
+
+.menu_wrapper, .menu_link_wrapper {
+	      display: inline-block;
+}
+
+#expense_category_form {
+			  position: relative;
+			  margin: 70px auto;
+			  display: none;
+			  width: 300px;
+			  height: 100px;
+			  background: #FFF;
+			  border: 2px solid black;
+			  
+}
+
+#expense_category_form input[type=text] {
+			  position: absolute;
+			  margin: 10px -110px;
+			  
+			  
+}
+
+#expense_category_form input[type="submit"] {
+			  position: absolute;
+			  margin: 30px -50px;
+}
+
+#expense_category_form a {
+			  position: absolute;
+                       margin: 60px 0 0 135px;	     
+			  
+			  
+}
+

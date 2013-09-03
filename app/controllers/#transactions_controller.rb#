@@ -2,23 +2,49 @@ class TransactionsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @transactions = current_user.transactions
+    @revenues = current_user.transactions.where(transaction_type: true).order("date desc")
+    @expenses = current_user.transactions.where(transaction_type: false).order("date desc, category_id, value_cents desc")
     @transaction = current_user.transactions.build
   end
 
   def create
-    transaction = current_user.transactions.build(params[:transaction])
+    transaction_hash = Transaction.createTransaction(params[:transaction], current_user)
+    transaction = current_user.transactions.build(transaction_hash)
 
-    if transaction.save
+    
+
+    if transaction.save 
       @transaction = current_user.transactions.build
-      @transactions = current_user.transactions
-      redirect_to transactions_path
+      @revenues = current_user.transactions.where(transaction_type: true)
+      @expenses = current_user.transactions.where(transaction_type: false)
+      
+      respond_to do |format|
+        format.html {redirect_to transactions_path}
+        format.js
+      end
     else
 
       flash[:alert] = "Record couldn't be saved"
-      @transactions = current_user.transactions
-      @transaction = current_user.transactions.build
-      render :index
+      @revenues = current_user.transactions.where(transaction_type: true)
+      @expenses = current_user.transactions.where(transaction_type: false)
+    
+      @transaction = transaction
+      respond_to do |format|
+        format.html {render :index}
+        format.js
+      end
+      
+    end
+  end
+
+  def destroy
+    transaction = Transaction.find(params[:id])
+    transaction.destroy
+    @transaction = current_user.transactions.build
+    @revenues = current_user.transactions.where(transaction_type: true)
+    @expenses = current_user.transactions.where(transaction_type: false)
+    redirect_to transactions_path}
+      format.js 
     end
   end
 end

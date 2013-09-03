@@ -19,11 +19,13 @@
 
 </nav>
 
-<% flash.each do |k,v| %>
-<p class=<%= k.to_s %>>
-  <%= v %>
+<p id="alert">
+  <%= flash[:alert] %>
 </p>
-<% end %>
+<p id="notice">
+  <%= flash[:notice] %>
+</p>
+
 
 <%= yield %>
 

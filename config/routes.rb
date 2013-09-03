@@ -1,6 +1,7 @@
 Ha::Application.routes.draw do
   devise_for :users
   resources :transactions
+  resources :categories
 
   root to: "static_pages#index"
   

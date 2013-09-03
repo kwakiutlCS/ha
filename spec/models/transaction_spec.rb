@@ -76,6 +76,20 @@ describe Transaction do
 
 
   describe "self.createTransaction" do
+    describe "value" do
+      it "accepts "" as 0" do
+        hash ={"value" => "", "qty" => "4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "0"
+      end
+
+      it "has a limit of 999999999.99 units" do
+        hash ={"value" => "1000000000.00", "qty" => "4"}
+        result = Transaction.createTransaction(hash, user)
+        result.should == nil
+      end
+    end
+
     it "has not a key 'value'" do
       hash ={"value" => "3", "qty" => "4"}
       result = Transaction.createTransaction(hash, user)

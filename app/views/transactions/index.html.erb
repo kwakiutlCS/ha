@@ -9,22 +9,21 @@
 
 
 <div id="expenses_table">
-  <% @expenses.each do |t| %>
-  <% if t.id != nil %>
-  <div class="table_row">
-    <div class="table_row_header"><div class="table_data"><%= t.value %></div><div class="table_data"><%= t.date.strftime("%B %d, %Y") %></div><div class="table_data"><%= t.category.capitalize %></div></div>
-    <div class="table_row_description">
-      <%= link_to "delete", t, method: :delete %>
-    </div>
-  </div>
-  <% end %>
-  <% end %>
+  <%= render "expenses" %>
   
  </div>
 
 
 <div class="table_form">
   <%= render "form_expenses" %>
+</div>
+
+<div id="expense_category_form">
+  <%= form_for @category,  html: {id: "new_expense_category"}  do |g| %>
+  <%= g.text_field :title, placeholder: "Title", cols:32 %><br/ >
+  <%= g.submit "Add Category" %>
+  <% end %>
+  <%= link_to "close", "#" %>
 </div>
 
 </section>

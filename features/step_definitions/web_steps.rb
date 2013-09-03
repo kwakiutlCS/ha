@@ -31,3 +31,8 @@ end
 Then(/^I should be on the homepage$/) do
   current_url.should == root_url
 end
+
+When(/^within "(.*?)" I press "(.*?)"$/) do |arg1, arg2|
+  within(:css, arg1) { click_button arg2 }
+end
+

@@ -34,6 +34,7 @@ class Transaction < ActiveRecord::Base
     hash.each do |k,v|
       if k == "value" 
         v = convertMoneyToCents(v)
+        return nil if v != nil && v.length >= 12
         result["value_cents"] = v
       elsif k == "category"
         if v
@@ -56,6 +57,8 @@ class Transaction < ActiveRecord::Base
   def self.convertMoneyToCents(v)
     if v =~ /\..*\./ or v =~ /,.*,/ or v =~ /\..*,/ or v =~ /,.*\./ 
       v = nil
+    elsif v == ""
+      return "0"
     elsif v =~ /\d*\.\d\d/
       v = v.sub(".","")
     elsif v =~ /\d*\.\d/

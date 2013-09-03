@@ -1,0 +1,6 @@
+Given(/^the following transactions exist:$/) do |table|
+  # table is a Cucumber::Ast::Table
+  table.hashes.each do |t|
+    FactoryGirl.create(:transaction, t)
+  end
+end

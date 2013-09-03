@@ -1,5 +1,4 @@
 $('#expenses_table').html("<%= escape_javascript(render(:partial => 'expenses')) %>");
-$("form")[0].reset();
 
 
 $(".table_row_header").on("click", function() {
@@ -9,4 +8,3 @@ $(".table_row_header").on("click", function() {
 	 $(this).children().last().delay(300).slideUp();
     });
     
-   
