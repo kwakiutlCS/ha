@@ -1,5 +1,25 @@
 require 'spec_helper'
 
 describe CategoryMap do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has a unique user_id category_id pair" do
+    CategoryMap.create(user_id: 3, category_id: 2)
+    c = CategoryMap.new(user_id: 3, category_id: 2)
+    c.should_not be_valid
+  end
+
+  it "is destroyed when category is destroyed" do
+    c = FactoryGirl.create(:category)
+    m = CategoryMap.create(user_id: 2, category_id: c.id)
+    id = m.id
+    c.destroy
+    CategoryMap.where(id: id).count == 0
+  end
+
+  it "is destroyed when user is destroyed" do
+    c = FactoryGirl.create(:user)
+    m = CategoryMap.create(user_id: c.id, category_id: 3)
+    id = m.id
+    c.destroy
+    CategoryMap.where(id: id).count == 0
+  end
 end

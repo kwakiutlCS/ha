@@ -8,6 +8,7 @@ $(function() {
     
     // TABLE
     $(".table_row_header").on("click", function() {
+	 $(".table_row_description").hide();
 	 $(this).parent().children().last().slideToggle();
     });
     $(".table_row").on("mouseleave", function() {

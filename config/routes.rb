@@ -1,8 +1,11 @@
 Ha::Application.routes.draw do
   devise_for :users
-  resources :transactions
-  resources :categories
-
+  resources :transactions do
+    collection do
+      post :add_category
+    end
+  end
+  
   root to: "static_pages#index"
   
 

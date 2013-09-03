@@ -72,4 +72,20 @@ class TransactionsController < ApplicationController
       format.js 
     end
   end
+
+
+  def add_category
+    @revenues = current_user.transactions.where(transaction_type: true)
+    @expenses = current_user.transactions.where(transaction_type: false)
+    @category = current_user.categories.build
+      
+    @total_expenses = Transaction.getTotal(@expenses)
+    @total_revenues = Transaction.getTotal(@revenues)
+    current_user.addCategory(params[:category][:title], params[:category][:transaction_type])
+
+    respond_to do |format|
+      format.html {redirect_to transactions_path}
+      format.js 
+    end
+  end
 end

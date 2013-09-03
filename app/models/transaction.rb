@@ -18,7 +18,7 @@ class Transaction < ActiveRecord::Base
 
    def category
     return Category.find(category_id).title if category_id
-    "None"
+    "No Category"
   end
 
   def self.createTransaction(hash, user)

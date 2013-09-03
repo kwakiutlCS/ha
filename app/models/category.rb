@@ -7,6 +7,8 @@ class Category < ActiveRecord::Base
   
   before_create :downcase_title
 
+  has_many :category_maps, dependent: :destroy
+
   private
   def downcase_title
     self.title = self.title.downcase
@@ -22,6 +24,5 @@ class Category < ActiveRecord::Base
   end
   
   
-
-  
+    
 end

@@ -66,13 +66,20 @@
 }
 .table_row_description {
 		display:none;
-		height: 70px;
+		min-height: 70px;
 }
 .links_data {
 	     position: relative;
 	     float: right;
 	     margin: 0 10px;
 	     text-align: center;
+	     display: inline-block;
+	     width: 15%;
+}
+
+.description{
+	 display: inline-block;
+	 width: 80%;
 }
 
 
@@ -113,7 +120,7 @@ body {
 
 #expense_category_form {
 			  position: relative;
-			  margin: 0px auto;
+			  margin: 3px auto;
 			  display: none;
 			  width: 300px;
 			  height: 100px;

@@ -14,13 +14,14 @@
  </div>
 
 
-<div class="table_form">
-  <%= render "form_expenses" %>
+<div class="table_form" id="table_expenses_form">
+  <%= render "formexpenses" %>
 </div>
 
 <div id="expense_category_form">
-  <%= form_for @category,  html: {id: "new_expense_category"}  do |g| %>
+  <%= form_for @category, url:add_category_transactions_path, html: {id: "new_expense_category"}  do |g| %>
   <%= g.text_field :title, placeholder: "Title", cols:32 %><br/ >
+  <%= g.hidden_field :transaction_type, value: "false" %>
   <%= g.submit "Add Category" %>
   <% end %>
   <%= link_to "close", "#" %>

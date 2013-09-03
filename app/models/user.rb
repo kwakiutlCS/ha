@@ -13,10 +13,28 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true 
 
   has_many :category_maps, dependent: :destroy
-  has_many :categories, through: :category_maps
+  has_many :categories, through: :category_maps, order: :title
   has_many :transactions, dependent: :destroy
 
   after_create :add_initial_categories
+
+
+  def addCategory(name, kind)
+    name.downcase!
+    kind = kind == "true"
+    return nil if self.categories.where("title = ? and transaction_type = ?", name, kind).count >= 1
+    
+    c = Category.where(title: name, transaction_type: kind).limit(1)
+    if c.count == 1
+      self.categories << c
+    else
+      Category.create(title: name, transaction_type: kind)
+      self.categories << Category.last
+    end
+    
+  end
+
+  
 
   private
   def add_initial_categories
