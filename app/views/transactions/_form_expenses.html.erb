@@ -16,7 +16,7 @@
 <%= f.hidden_field :category, id:"transaction_category_expenses", :value => "None" %>
 <div class="menu_wrapper">
 <ul class="menu" id="expenses_category_menu">
-  <li> <span>No category</span>
+  <li> <span>No Category</span>
     <ul class="submenu">
       <li><a href="#">No Category</a></li>
       <% current_user.categories.each do |c| %>

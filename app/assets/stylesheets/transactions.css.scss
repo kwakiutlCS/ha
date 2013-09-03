@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#expenses_table, #revenues_table {
+#expenses_table, #revenues_table  {
 	     position: relative;
 	     float: left;
 	     width: 50%;
@@ -34,6 +34,25 @@
 	     float: right;
 	     
 }	     	
+
+#total_expenses {
+	     background: #2B2B2B;	    
+	color: #F2EFE4;  
+	line-height: 30px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+#total_expenses div {
+	     display: inline-block;
+	     padding: 0 20px;
+}
+.total_value {
+	      position: relative;
+	      float: right;
+	      
+}
+
 
 .table_form {
 	    position: relative;
@@ -79,6 +98,8 @@
      width: 80%;
      margin: auto;
      font-size: small;
+     min-height: 520px;
+     padding: 20px 0;
      }
 
 body {
@@ -92,7 +113,7 @@ body {
 
 #expense_category_form {
 			  position: relative;
-			  margin: 70px auto;
+			  margin: 0px auto;
 			  display: none;
 			  width: 300px;
 			  height: 100px;

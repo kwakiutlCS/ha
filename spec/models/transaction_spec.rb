@@ -210,4 +210,12 @@ describe Transaction do
 
     end
   end
+
+  describe "self.getTotal" do
+    it "returns the sum of a collection of transactions" do
+      t1 = FactoryGirl.create(:transaction, value_cents: "3425")
+      t2 = FactoryGirl.create(:transaction, value_cents: "332")
+      Transaction.getTotal(Transaction.all).should == "$37.57"
+    end
+  end
 end

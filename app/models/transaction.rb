@@ -13,15 +13,7 @@ class Transaction < ActiveRecord::Base
   after_initialize :set_defaults
 
   def value
-    money = "$"+(value_cents/100.to_f).to_s
-    if money =~ /\.\d$/
-      money = money+"0"
-    elsif money =~ /\.\d\d/
-      money = money
-    else
-      money = money+".00"
-    end
-    money
+    Transaction.format_money(value_cents)
   end
 
    def category
@@ -48,6 +40,14 @@ class Transaction < ActiveRecord::Base
     result
   end
   
+
+  def self.getTotal(collection)
+    total = 0
+    collection.each do |c|
+      total+= c.value_cents
+    end
+    return self.format_money(total)
+  end
 
   private
   def set_defaults
@@ -80,5 +80,17 @@ class Transaction < ActiveRecord::Base
       v = v[1,v.length-1]
     end
     v
+  end
+
+  def self.format_money(x)
+    money = "$"+(x/100.to_f).to_s
+    if money =~ /\.\d$/
+      money = money+"0"
+    elsif money =~ /\.\d\d/
+      money = money
+    else
+      money = money+".00"
+    end
+    money
   end
 end

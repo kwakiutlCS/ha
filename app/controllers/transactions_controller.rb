@@ -6,6 +6,9 @@ class TransactionsController < ApplicationController
     @expenses = current_user.transactions.where(transaction_type: false).order("date desc, category_id, value_cents desc")
     @transaction = current_user.transactions.build
     @category = current_user.categories.build
+    @total_expenses = Transaction.getTotal(@expenses)
+    @total_revenues = Transaction.getTotal(@revenues)
+    
   end
 
   def create
@@ -17,6 +20,8 @@ class TransactionsController < ApplicationController
       @revenues = current_user.transactions.where(transaction_type: true)
       @expenses = current_user.transactions.where(transaction_type: false)
       @category = current_user.categories.build
+      @total_expenses = Transaction.getTotal(@expenses)
+      @total_revenues = Transaction.getTotal(@revenues)
       flash[:alert] = "Record couldn't be saved"
       respond_to do |format|
         format.html {render :index}
@@ -28,7 +33,8 @@ class TransactionsController < ApplicationController
       @revenues = current_user.transactions.where(transaction_type: true)
       @expenses = current_user.transactions.where(transaction_type: false)
       @category = current_user.categories.build
-
+      @total_expenses = Transaction.getTotal(@expenses)
+      @total_revenues = Transaction.getTotal(@revenues)
       respond_to do |format|
         format.html {redirect_to transactions_path}
         format.js
@@ -41,6 +47,8 @@ class TransactionsController < ApplicationController
       @expenses = current_user.transactions.where(transaction_type: false)
       @category = current_user.categories.build
       @transaction = transaction
+      @total_expenses = Transaction.getTotal(@expenses)
+      @total_revenues = Transaction.getTotal(@revenues)
       respond_to do |format|
         format.html {render :index}
         format.js
@@ -57,6 +65,8 @@ class TransactionsController < ApplicationController
     @revenues = current_user.transactions.where(transaction_type: true)
     @expenses = current_user.transactions.where(transaction_type: false)
     @category = current_user.categories.build
+    @total_expenses = Transaction.getTotal(@expenses)
+    @total_revenues = Transaction.getTotal(@revenues)
     respond_to do |format|
       format.html {redirect_to transactions_path}
       format.js 
