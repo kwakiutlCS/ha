@@ -23,4 +23,4 @@ Feature: view expenses
 	  And I am signed in as "palerma"
 	  When I follow "Transactions"
 	  Then I should not see "$15.26"
-	  But I should see "$5.26"
+	  But I should see "$25.26"

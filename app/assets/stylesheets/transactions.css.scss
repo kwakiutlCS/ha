@@ -3,9 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #expenses_table, #revenues_table  {
-	     position: relative;
-	     float: left;
-	     width: 50%;
+	     position: absolute;
+	     left: 30px;
+	     top: 80px;
+	     width: 540px;
 	     
 }
 
@@ -86,9 +87,9 @@
 	 padding: 10px;
 	 border: 2px solid black;
 	 border-radius: 5px;
-	 width: 35%;
+	 width: 30%;
 	 position: absolute;
-	 left: 50%;
+	 left: 580px;
 	 clear: both;
 }
 
@@ -148,7 +149,7 @@
 #tabs {
      position: relative;
      float: both;
-     width: 80%;
+     width: 1080px;
      margin: auto;
      font-size: small;
      min-height: 520px;
@@ -158,7 +159,7 @@
 
 .filler{
 	 position: absolute;
-	 left: 100%;
+	 left: 100.2%;
 	 top: -10px;
 	 background: #62605c;
 	 width: 50%;

@@ -75,6 +75,7 @@ class TransactionsController < ApplicationController
   def filter
     load_data
     @transaction = current_user.transactions.build
+    p params
     @expenses = current_user.getExpenses(params)
     render :index
   end

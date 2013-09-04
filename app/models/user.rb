@@ -36,7 +36,8 @@ class User < ActiveRecord::Base
 
   
   def getExpenses(p)
-    category = p[:filter_category]
+
+    category = p[:filter_category] || "All"
     params = {transaction_type: false}
 
     if category == "All"
@@ -44,7 +45,7 @@ class User < ActiveRecord::Base
     elsif category == "No category"
       params[:category_id] = nil
     else
-      cat_id = self.categories.where(title: category).first.id
+      cat_id = self.categories.where(title: category.downcase).first.id
       params[:category_id] = cat_id
     end
     
