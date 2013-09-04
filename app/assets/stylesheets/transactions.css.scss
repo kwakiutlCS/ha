@@ -12,6 +12,7 @@
 .table_row {
 	    line-height: 25px;
 	    margin: 1px;
+	    
 }
 
 .table_data {
@@ -41,6 +42,7 @@
 	line-height: 30px;
 	font-weight: bold;
 	margin-bottom: 20px;
+	border-radius: 5px;
 }
 
 #total_expenses div {
@@ -55,14 +57,58 @@
 
 
 .table_form {
-	    position: relative;
-	    float: right;
+	    position: absolute;
+	    border: 2px solid black;
+	    border-radius: 5px;
+	    padding: 10px;
+	    margin: 0;
+	    left: 101%;
+	    width: 40%;
+	    background: #FFF;
 }
+
+.table_form_handle {
+		     position: absolute;
+		     width: 90px;
+		     height: 36px;
+		     background: #62605c;
+		     color: #E95;
+		     border-radius: 15px;
+		     right: -2%;
+		     font-weight: bold;
+		     padding: 5px 12px 5px 0;
+		     line-height: 18px;
+		     text-align: center;
+}		     
+
+.filter {
+	 margin: 30px;
+	 padding: 10px;
+	 border: 2px solid black;
+	 border-radius: 5px;
+	 width: 35%;
+	 position: absolute;
+	 left: 50%;
+	 clear: both;
+}
+
+.filter label {
+	 font-weight: bold;
+}
+
+#custom_date_expense_fields {
+				display: none;      
+}
+.filter input {
+	 
+}
+
 
 .table_row_header {
 	cursor: pointer;
 	background: #2B2B2B;	    
 	color: #F2EFE4;
+	border-radius: 3px;
 }
 .table_row_description {
 		display:none;
@@ -107,11 +153,23 @@
      font-size: small;
      min-height: 520px;
      padding: 20px 0;
+     
      }
 
+.filler{
+	 position: absolute;
+	 left: 100%;
+	 top: -10px;
+	 background: #62605c;
+	 width: 50%;
+	 height: 500px;
+	 z-index: 100;
+	 
+}
 body {
-     background: #808CE9;
-     
+     background: #62605c;
+     overflow-y: scroll;
+     overflow-x: hidden;
 }
 
 .menu_wrapper, .menu_link_wrapper {
@@ -119,31 +177,32 @@ body {
 }
 
 #expense_category_form {
-			  position: relative;
-			  margin: 3px auto;
+			  position: absolute;
+			  margin: 70px 300px;
 			  display: none;
 			  width: 300px;
 			  height: 100px;
 			  background: #FFF;
 			  border: 2px solid black;
-			  
+			  border-radius: 5px;
 }
 
 #expense_category_form input[type=text] {
-			  position: absolute;
-			  margin: 10px -110px;
-			  
+			  position: relative;
+			  margin: 10px 35px;
+			  border-radius: 3px;
 			  
 }
 
 #expense_category_form input[type="submit"] {
-			  position: absolute;
-			  margin: 30px -50px;
+			  position: relative;
+			  margin: 0px 95px;
 }
 
 #expense_category_form a {
-			  position: absolute;
-                       margin: 60px 0 0 135px;	     
+			  display: block;
+			  position: relative;
+                       margin: 10px 135px;	     
 			  
 			  
 }

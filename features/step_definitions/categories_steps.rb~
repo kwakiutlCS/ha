@@ -1,0 +1,5 @@
+Given(/^the following categories exist:$/) do |table|
+  table.hashes.each do |a|
+    FactoryGirl.create(:category, a)
+  end
+end

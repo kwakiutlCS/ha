@@ -1,0 +1,12 @@
+$('#expenses_table').html("<%= escape_javascript(render(:partial => 'expenses')) %>");
+$("form")[0].reset();
+
+
+$(".table_row_header").on("click", function() {
+	 $(this).parent().children().last().slideToggle();
+    });
+    $(".table_row").on("mouseleave", function() {
+	 $(this).children().last().delay(300).slideUp();
+    });
+    
+   

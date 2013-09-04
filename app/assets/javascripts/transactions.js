@@ -2,17 +2,20 @@ $(function() {
 
     // DATEPICKER
     $(".date_selector").datepicker({ dateFormat: "MM d, yy" });
-    
+    $("#start_date_expense").datepicker({ dateFormat: "MM d, yy" });
+    $("#end_date_expense").datepicker({ dateFormat: "MM d, yy" });
+
     // TABS
     $("#tabs").tabs();
     
     // TABLE
     $(".table_row_header").on("click", function() {
-	 $(".table_row_description").hide();
-	 $(this).parent().children().last().slideToggle();
+	 var x = $(this).parent().children().last();
+	 $(".table_row_description").not(x).hide();
+	 x.toggle();
     });
     $(".table_row").on("mouseleave", function() {
-	 $(this).children().last().delay(300).slideUp();
+	 $(this).children().last().slideUp();
     });
    
     // CATEGORY MENU  
@@ -36,6 +39,11 @@ $(function() {
 	 $("#transaction_category_expenses").val($(this).text());
     });
 
+    $("ul#filter_expenses_category_menu.menu").on("click", "li ul li a", function() {
+	 $("ul#filter_expenses_category_menu.menu li span").text($(this).text());
+	 $("#filter_category").val($(this).text());
+    });
+
     //CATEGORY FORM
     $("#add_expense_category").on("click", function() {
 	 $("#expense_category_form").toggle();
@@ -43,4 +51,26 @@ $(function() {
     $("#expense_category_form a").on("click", function() {
 	  $("#expense_category_form").hide();
     });
+
+    // FORM
+    $("#expenses_handle").on("click", function(){
+	 $(this).hide();
+	 $("#table_expenses_form").animate({left: "57%"},1000);
+    });
+    $(".table_form").on("mouseleave", function(){
+	 $("#table_expenses_form").animate({left: "101%"},1000, function() {
+	     $(".table_form_handle").show();
+	 });
+	 
+    });
+
+    // FILTER
+    $("#date_expense_select_fields").change(function(){
+	 if ($(this).val() == "6") {
+	     $("#custom_date_expense_fields").show();
+	 }
+	 else
+	     $("#custom_date_expense_fields").hide();
+    });
+    
 });

@@ -1,0 +1,47 @@
+<%= form_for @transaction, html: {url: filter_transactions_path, method: "get"}  do |f| %>
+
+
+<%= f.hidden_field :category, value:"All" , id:"filter_category" %>
+<label>Category: </label> 
+
+<div class="menu_wrapper">
+<ul class="menu" id="expenses_category_menu">
+  <li> <span>All</span>
+    <ul class="submenu">
+      <li><a href="#">All</a></li>
+      <li><a href="#">No Category</a></li>
+      <% current_user.categories.each do |c| %>
+      <% if c.transaction_type == false %>
+      <li><a href="#"><%= c.title.capitalize %></a></li>
+      <% end %>
+      <% end %>
+    </ul>
+</ul>
+</div>
+
+
+<br /><br />
+
+<label>Date:</label> 
+<select id="date_expense_select_fields">
+  <option value="1">Today</option>
+  <option value="2">Current Week</option>
+  <option value="3" selected>Current Month</option>
+  <option value="4">Current Year</option>
+  <option value="5">All</option>
+  <option value="6">Custom</option>
+  
+</select>
+
+<p id="custom_date_expense_fields">
+  
+  <label>Start Date:</label>  
+  <input type="text" id="start_date_expense" value="<%= Date.today.strftime('%B %d, %Y') %>"><br/>
+  <label>End Date:</label> 
+  <input type="text" id="end_date_expense" value="<%= Date.today.strftime('%B %d, %Y') %>">
+  
+</p>
+
+<br /><br />
+<%= f.submit "Filter"%>
+<% end %>

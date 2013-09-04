@@ -1,0 +1,42 @@
+<%= form_tag(filter_transactions_path, method: "get") do %>
+
+
+<%= hidden_field_tag :filter_category, "All"  %>
+<label>Category: </label> 
+
+<div class="menu_wrapper">
+<ul class="menu" id="filter_expenses_category_menu">
+  <li> <span>All</span>
+    <ul class="submenu">
+      <li><a href="#">All</a></li>
+      <li><a href="#">No Category</a></li>
+      <% current_user.categories.each do |c| %>
+      <% if c.transaction_type == false %>
+      <li><a href="#"><%= c.title.capitalize %></a></li>
+      <% end %>
+      <% end %>
+    </ul>
+</ul>
+</div>
+
+
+<br /><br />
+
+<label>Date:</label> 
+<%= select_tag(:date, options_for_select([["Today", "day"],["Current Week", "week"],["Current Month", "month"],["Current Year", "year"],["All", "All"],["Custom", "custom"]],"month") , id: "date_expense_select_fields") %>
+
+  
+
+
+<p id="custom_date_expense_fields">
+  
+  <label>Start Date:</label>  
+  <%= text_field_tag :startDate, "#{Date.today.strftime('%B %d, %Y')}", id:"start_date_expense"  %><br />
+  <label>End Date:</label> 
+  <%= text_field_tag :endDate, "#{Date.today.strftime('%B %d, %Y')}", id:"end_date_expense"  %>
+  
+</p>
+
+<br /><br />
+<%= submit_tag "Filter"%>
+<% end %>

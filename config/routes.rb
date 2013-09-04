@@ -3,6 +3,7 @@ Ha::Application.routes.draw do
   resources :transactions do
     collection do
       post :add_category
+      get :filter
     end
   end
   

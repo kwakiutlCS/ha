@@ -81,4 +81,61 @@ describe User do
   end
   
   
+  describe "#getExpenses" do
+    before(:each) do
+      user.addCategory("car","false")
+      c1 = user.categories.last
+      user.addCategory("food", "false")
+      c2 = user.categories.last
+      
+      FactoryGirl.create(:transaction, user_id: user.id, category_id: c1.id, date: Date.today-2.year)
+      FactoryGirl.create(:transaction, user_id: user.id, category_id: c2.id, date: Date.today-2.months)
+      FactoryGirl.create(:transaction, user_id: user.id, category_id: c2.id, date: Date.today-2.weeks)
+      FactoryGirl.create(:transaction, user_id: user.id, category_id: c1.id, date: Date.today-5.days)
+      FactoryGirl.create(:transaction, user_id: user.id, category_id: c1.id, date: Date.today+2.days)
+      FactoryGirl.create(:transaction, user_id: user.id, category_id: c1.id, date: Date.today)
+    end
+    
+    it "gets all the category with 'All'" do
+      p = {filter_category: "All",date: "All"}
+      c = user.getExpenses(p)
+      c.count.should == 6
+    end
+
+    it "gets some of the filter_category" do
+      p = {filter_category: "car",date: "All"}
+      c = user.getExpenses(p)
+      c.count.should == 4
+    end
+
+    it "gets the correct less than a year" do
+      p = {filter_category: "All",date: "year"}
+      c = user.getExpenses(p)
+      c.count.should == 4
+    end
+
+    it "gets the correct less than a month" do
+      p = {filter_category: "All",date: "month"}
+      c = user.getExpenses(p)
+      c.count.should == 1
+    end
+
+    it "gets the correct less than a week" do
+      p = {filter_category: "All",date: "week"}
+      c = user.getExpenses(p)
+      c.count.should == 1
+    end
+
+    it "gets the correct less than a day" do
+      p = {filter_category: "All",date: "day"}
+      c = user.getExpenses(p)
+      c.count.should == 1
+    end
+
+     it "gets the correct multiple conditions" do
+      p = {filter_category: "car",date: "year"}
+      c = user.getExpenses(p)
+      c.count.should == 2
+    end
+  end
 end

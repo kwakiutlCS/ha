@@ -35,6 +35,51 @@ class User < ActiveRecord::Base
   end
 
   
+  def getExpenses(p)
+    category = p[:filter_category]
+    params = {transaction_type: false}
+
+    if category == "All"
+      collection = self.transactions
+    elsif category == "No category"
+      params[:category_id] = nil
+    else
+      cat_id = self.categories.where(title: category).first.id
+      params[:category_id] = cat_id
+    end
+    
+    date = p[:date]
+    startDate = p[:startDate]
+    endDate = p[:endDate]
+    
+    if date != "custom"
+      if date == "day"
+        endDate = Date.today
+        startDate = Date.today
+      elsif date != "All"
+        endDate = Date.today
+        startDate = Date.today.send("at_beginning_of_#{date}")
+      end
+    end
+    
+    params[:startDate] = startDate
+    params[:endDate] = endDate
+
+    if date == "All"
+      if params[:category_id]
+        return self.transactions.where("category_id = ? and transaction_type = ?", params[:category_id], params[:transaction_type])
+      else
+        return self.transactions.where("transaction_type = ?", params[:transaction_type])
+      end
+    else
+      if params[:category_id]
+        return self.transactions.where("category_id = ? and transaction_type = ? and date >= ? and date <= ?", params[:category_id], params[:transaction_type], params[:startDate], params[:endDate])
+      else
+        return self.transactions.where("transaction_type = ? and date >= ? and date <= ?", params[:transaction_type], params[:startDate], params[:endDate])
+      end
+    end
+  end
+
 
   private
   def add_initial_categories
@@ -44,4 +89,7 @@ class User < ActiveRecord::Base
     end
         
   end
+
+
+  
 end

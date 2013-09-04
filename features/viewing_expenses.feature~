@@ -1,0 +1,25 @@
+Feature: view expenses
+
+
+	  Background:
+	  Given the following users exist:
+	  |name|email|password|
+	  |palerma|sjfk@kjlwfg.com|password|
+	  And the following categories exist:
+	  |title|transaction_type|
+	  |food|false|
+	  |health|false|
+	  And "palerma" has all the categories
+	  And the following transactions exist:
+	  |date|transaction_type|value_cents|user|
+	  |2013-08-28|false|15.26|palerma|
+	  |2013-09-01|false|14.26|palerma|
+	  |2013-09-04|false|25.26|palerma|
+	  |2013-08-02|false|5.26|palerma|
+	  
+
+	  Scenario: view default transactions
+	  Given I am on the homepage
+	  When I follow "Transactions"
+	  Then I should not see "$15.26"
+	  But I should see "$5.26"
