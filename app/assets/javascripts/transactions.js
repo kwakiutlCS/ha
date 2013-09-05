@@ -57,7 +57,7 @@ $(function() {
 	 $(this).hide();
 	 $("#table_expenses_form").animate({left: "57%"},1000);
     });
-    $(".table_form").on("mouseleave", function(){
+    $(".table_form").on("click", "#expense_form_closer", function(){
 	 $("#table_expenses_form").animate({left: "101%"},1000, function() {
 	     $(".table_form_handle").show();
 	 });
@@ -66,11 +66,21 @@ $(function() {
 
     // FILTER
     $("#date_expense_select_fields").change(function(){
-	 if ($(this).val() == "6") {
+	 if ($(this).val() == "custom") {
 	     $("#custom_date_expense_fields").show();
 	 }
 	 else
 	     $("#custom_date_expense_fields").hide();
     });
+    $("#date_expense_select_fields").val(getURLParameter("date"));
+    $("ul#filter_expenses_category_menu.menu li span").text(getURLParameter("filter_category"));
+    $("#filter_category").val(getURLParameter("filter_category"));
+    
+
+    function getURLParameter(name) {
+	 return decodeURI(
+            (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+	 );
+    }
     
 });

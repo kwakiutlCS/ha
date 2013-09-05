@@ -2,8 +2,7 @@ class TransactionsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    load_session
-    redirect_to filter_transactions_path({category: session[:category], date: session[:date], startDate: session[:startDate], endDate: session[:endDate]})
+    redirect_to filter_transactions_path({filter_category: session[:filter_category], date: session[:date], startDate: session[:startDate], endDate: session[:endDate]})
   end
 
   def create
@@ -12,7 +11,7 @@ class TransactionsController < ApplicationController
     
     if transaction_hash == nil
       @transaction = current_user.transactions.build
-      load_data
+      load_data(session)
       flash[:alert] = "Record couldn't be saved"
       respond_to do |format|
         format.html {render :index}
@@ -21,7 +20,7 @@ class TransactionsController < ApplicationController
     
     elsif transaction.save 
       @transaction = current_user.transactions.build
-      load_data
+      load_data(session)
       respond_to do |format|
         format.html {redirect_to transactions_path}
         format.js
@@ -30,7 +29,7 @@ class TransactionsController < ApplicationController
     else
 
       flash[:alert] = "Record couldn't be saved"
-      load_data
+      load_data(session)
       @transaction = transaction
       respond_to do |format|
         format.html {render :index}
@@ -45,7 +44,8 @@ class TransactionsController < ApplicationController
     transaction = Transaction.find(params[:id])
     transaction.destroy
     @transaction = current_user.transactions.build
-    load_data
+    load_data(session)
+    
     respond_to do |format|
       format.html {redirect_to transactions_path}
       format.js 
@@ -54,15 +54,16 @@ class TransactionsController < ApplicationController
 
   def edit
     @transaction = Transaction.find(params[:id])
-    load_data
+    load_data(session)
     respond_to do |format|
       format.html {redirect_to transactions_path}
       format.js 
     end
   end
 
+
   def add_category
-    load_data
+    load_data(session)
     @transaction = current_user.transactions.build
     current_user.addCategory(params[:category][:title], params[:category][:transaction_type])
 
@@ -73,28 +74,37 @@ class TransactionsController < ApplicationController
   end
 
   def filter
-    load_data
+    load_session(params)
+    load_data(session)
     @transaction = current_user.transactions.build
-    p params
-    @expenses = current_user.getExpenses(params)
-    render :index
+    respond_to do |format|
+      format.html {render :index}
+     
+    end
   end
 
+
+
+
   private 
-  def load_data
+  def load_data(params_hash)
     @revenues = current_user.transactions.where(transaction_type: true).order("date desc, category_id, value_cents desc")
-    @expenses = current_user.transactions.where(transaction_type: false).order("date desc, category_id, value_cents desc")
+    @expenses = current_user.getExpenses(params_hash)
     
     @total_expenses = Transaction.getTotal(@expenses)
     @total_revenues = Transaction.getTotal(@revenues)
     @category = current_user.categories.build
   end
 
-  def load_session
-    session[:filter_category] = params[:filter_category] if params[:filter_category]
-    session[:date] = params[:date] ? params[:date] : "month"
-    session[:startDate] = params[:startDate] if params[:startDate]
-    session[:endDate] = params[:endDate] if params[:endDate]
+
+
+  def load_session(p)
+    session[:filter_category] = p[:filter_category] if p[:filter_category]
+    session[:filter_category] = "All" unless session[:filter_category]
+    session[:date] = p[:date] if p[:date] 
+    session[:date] = "month" unless session[:date]
+    session[:startDate] = p[:startDate] if p[:startDate]
+    session[:endDate] = p[:endDate] if p[:endDate]
     
   end
 end
