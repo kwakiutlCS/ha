@@ -1,11 +1,6 @@
-$('#expenses_table').html("<%= escape_javascript(render(:partial => 'expenses')) %>");
+$('#expense_edit_form').html("<%= escape_javascript(render(:partial => 'editexpense')) %>");
+
+$("#expense_edit_form").show();
 
 
-$(".table_row_header").on("click", function() {
-	 $(this).parent().children().last().slideToggle();
-    });
-    $(".table_row").on("mouseleave", function() {
-	 $(this).children().last().delay(300).slideUp();
-    });
-    
-   
+$("#edit_expenses_category_menu").menu();

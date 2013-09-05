@@ -56,7 +56,6 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
     load_data(session)
     respond_to do |format|
-      format.html {redirect_to transactions_path}
       format.js 
     end
   end

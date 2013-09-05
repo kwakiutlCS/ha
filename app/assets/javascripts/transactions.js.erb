@@ -46,7 +46,9 @@ $(function() {
 	 $("#filter_form").submit();
     });
 
-    
+    $("#expense_edit_form").on("click","a#edit_expense_form_closer", function(){
+    	$("#expense_edit_form").hide();
+    });
 
     // FORM
     $("#expenses_handle").on("click", function(){
@@ -87,5 +89,7 @@ $(function() {
     $("#end_date_expense").change(function(){
 	 $("#filter_form").submit();
     });
-    	 
+   
+
+   	 
 });

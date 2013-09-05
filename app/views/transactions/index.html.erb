@@ -20,8 +20,10 @@
   <li><a href="#revenues"><span>Revenues</span></a></li>
 </ul>
 
-<section id="expenses">
 
+
+
+<section id="expenses">
 
 <div id="expenses_table">
   <%= render "expenses" %>
@@ -48,6 +50,9 @@
   <%= link_to "close", "#" %>
 </div>
 
+<div class="table_form" id="expense_edit_form">
+  <%= render "editexpense" %>
+</div>
 <div class="filler"></div>
 
 </section>
