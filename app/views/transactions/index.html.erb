@@ -1,8 +1,14 @@
-<script >
+<script>
   $(document).ready(function(){
-  $("#date_expense_select_fields").val("<%= session[:date] %>");
-  $("ul#filter_expenses_category_menu.menu li span").text("<%= session[:filter_category] %>");
+    $("#date_expense_select_fields").val("<%= session[:date] %>");
+    $("ul#filter_expenses_category_menu.menu li span").text("<%= session[:filter_category] %>");
     $("#filter_category").val("<%= session[:filter_category] %>");
+
+    if ($("#date_expense_select_fields").val() == "custom") {
+      $("#custom_date_expense_fields").show();
+      $("#start_date_expense").val("<%= session[:startDate] %>");
+      $("#end_date_expense").val("<%= session[:endDate] %>");
+    }
   });
 </script>
 
