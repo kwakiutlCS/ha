@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
     if category == "All"
       collection = self.transactions
-    elsif category == "No category"
+    elsif category == "No Category"
       params[:category_id] = nil
     else
       cat_id = self.categories.where(title: category.downcase).first.id

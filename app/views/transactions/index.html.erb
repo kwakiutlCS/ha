@@ -1,4 +1,13 @@
+<script >
+  $(document).ready(function(){
+  $("#date_expense_select_fields").val("<%= session[:date] %>");
+  $("ul#filter_expenses_category_menu.menu li span").text("<%= session[:filter_category] %>");
+    $("#filter_category").val("<%= session[:filter_category] %>");
+  });
+</script>
+
 <div id="tabs" class="group">
+
 
 <ul>
   <li><a href="#expenses"><span>Expenses</span></a></li>
