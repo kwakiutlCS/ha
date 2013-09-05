@@ -66,6 +66,7 @@
 	    left: 101%;
 	    width: 40%;
 	    background: #FFF;
+	    z-index: 5;
 }
 
 .table_form_handle {
@@ -81,6 +82,12 @@
 		     line-height: 18px;
 		     text-align: center;
 }		     
+
+#category_handle {
+		   top: 23%;
+}
+
+
 
 .filter {
 	 margin: 30px;
@@ -176,8 +183,7 @@ body {
 
 #expense_category_form {
 			  position: absolute;
-			  margin: 70px 300px;
-			  display: none;
+			  left: 102%;
 			  width: 300px;
 			  height: 100px;
 			  background: #FFF;

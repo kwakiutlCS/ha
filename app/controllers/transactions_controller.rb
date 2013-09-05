@@ -48,7 +48,7 @@ class TransactionsController < ApplicationController
     
     respond_to do |format|
       format.html {redirect_to transactions_path}
-      format.js 
+      format.js {render :create}
     end
   end
 
@@ -79,7 +79,7 @@ class TransactionsController < ApplicationController
     @transaction = current_user.transactions.build
     respond_to do |format|
       format.html {render :index}
-     
+      format.js {render :create}
     end
   end
 

@@ -3,12 +3,12 @@
     $("#date_expense_select_fields").val("<%= session[:date] %>");
     $("ul#filter_expenses_category_menu.menu li span").text("<%= session[:filter_category] %>");
     $("#filter_category").val("<%= session[:filter_category] %>");
-
+    $("#start_date_expense").val("<%= session[:startDate] %>");
+    $("#end_date_expense").val("<%= session[:endDate] %>");
+    
     if ($("#date_expense_select_fields").val() == "custom") {
       $("#custom_date_expense_fields").show();
-      $("#start_date_expense").val("<%= session[:startDate] %>");
-      $("#end_date_expense").val("<%= session[:endDate] %>");
-    }
+    }  
   });
 </script>
 
@@ -36,7 +36,8 @@
   <%= render "formexpenses" %>
 </div>
 <div class="table_form_handle" id="expenses_handle">Add Expenses</div>
-<div class="filler"></div>
+
+<div class="table_form_handle" id="category_handle">Add Category</div>
 
 <div id="expense_category_form">
   <%= form_for @category, url:add_category_transactions_path, html: {id: "new_expense_category"}  do |g| %>
@@ -46,6 +47,8 @@
   <% end %>
   <%= link_to "close", "#" %>
 </div>
+
+<div class="filler"></div>
 
 </section>
 

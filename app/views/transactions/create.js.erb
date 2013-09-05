@@ -4,9 +4,18 @@ $("form")[0].reset();
 
 $(".table_row_header").on("click", function() {
 	 $(this).parent().children().last().slideToggle();
-    });
-    $(".table_row").on("mouseleave", function() {
+});
+$(".table_row").on("mouseleave", function() {
 	 $(this).children().last().delay(300).slideUp();
-    });
+});
     
    
+$("#date_expense_select_fields").val("<%= session[:date] %>");
+    $("ul#filter_expenses_category_menu.menu li span").text("<%= session[:filter_category] %>");
+    $("#filter_category").val("<%= session[:filter_category] %>");
+    $("#start_date_expense").val("<%= session[:startDate] %>");
+    $("#end_date_expense").val("<%= session[:endDate] %>");
+    
+    if ($("#date_expense_select_fields").val() == "custom") {
+      $("#custom_date_expense_fields").show();
+    }  

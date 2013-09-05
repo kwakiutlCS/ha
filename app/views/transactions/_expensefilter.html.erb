@@ -1,4 +1,4 @@
-<%= form_tag(filter_transactions_path, method: "get") do %>
+<%= form_tag(filter_transactions_path, method: "get", remote: true, id:"filter_form") do %>
 
 
 <%= hidden_field_tag :filter_category, "All"  %>

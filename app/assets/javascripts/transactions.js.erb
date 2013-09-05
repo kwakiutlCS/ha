@@ -43,24 +43,30 @@ $(function() {
     $("ul#filter_expenses_category_menu.menu").on("click", "li ul li a", function() {
 	 $("ul#filter_expenses_category_menu.menu li span").text($(this).text());
 	 $("#filter_category").val($(this).text());
+	 $("#filter_form").submit();
     });
 
-    //CATEGORY FORM
-    $("#add_expense_category").on("click", function() {
-	 $("#expense_category_form").toggle();
-    });
-    $("#expense_category_form a").on("click", function() {
-	  $("#expense_category_form").hide();
-    });
+    
 
     // FORM
     $("#expenses_handle").on("click", function(){
-	 $(this).hide();
+	 //$(this).hide();
 	 $("#table_expenses_form").animate({left: "57%"},1000);
     });
     $(".table_form").on("click", "#expense_form_closer", function(){
 	 $("#table_expenses_form").animate({left: "101%"},1000, function() {
-	     $(".table_form_handle").show();
+	     //$(".table_form_handle").show();
+	 });
+	 
+    });
+
+    $("#category_handle").on("click", function(){
+	 //$(this).hide();
+	 $("#expense_category_form").animate({left: "57%"},1000);
+    });
+    $("#expense_category_form").on("click", "a", function(){
+	 $("#expense_category_form").animate({left: "101%"},1000, function() {
+	     //$(".table_form_handle").show();
 	 });
 	 
     });
@@ -70,7 +76,16 @@ $(function() {
 	 if ($(this).val() == "custom") {
 	     $("#custom_date_expense_fields").show();
 	 }
-	 else
-	     $("#custom_date_expense_fields").hide();
+	 else {
+	     $("#custom_date_expense_fields").hide();	
+	     $("#filter_form").submit();
+	 }
     });
+    $("#start_date_expense").change(function(){
+	 $("#filter_form").submit();
     });
+    $("#end_date_expense").change(function(){
+	 $("#filter_form").submit();
+    });
+    	 
+});
