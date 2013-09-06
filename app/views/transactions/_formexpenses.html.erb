@@ -10,7 +10,7 @@
 
 <p>
 <%= f.label :value, "Value" %>
-<%= f.number_field :value, min: 0, step: 0.01, placeholder: "0.00", id: "transaction_value_expense" %>
+<%= f.number_field :value, min: 0, max:999999999.99, step: 0.01, placeholder: "0.00", id: "transaction_value_expense" %>
 </p>
 
 <%= f.hidden_field :category, id:"transaction_category_expenses", :value => "None" %>

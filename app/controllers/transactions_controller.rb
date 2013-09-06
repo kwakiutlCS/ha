@@ -10,7 +10,6 @@ class TransactionsController < ApplicationController
     transaction = current_user.transactions.build(transaction_hash)
     
     if transaction_hash == nil
-      @transaction = current_user.transactions.build
       load_data(session)
       flash[:alert] = "Record couldn't be saved"
       respond_to do |format|
@@ -19,8 +18,8 @@ class TransactionsController < ApplicationController
       end
     
     elsif transaction.save 
-      @transaction = current_user.transactions.build
       load_data(session)
+      flash[:alert] = "Record saved"
       respond_to do |format|
         format.html {redirect_to transactions_path}
         format.js
@@ -43,7 +42,6 @@ class TransactionsController < ApplicationController
   def destroy
     transaction = Transaction.find(params[:id])
     transaction.destroy
-    @transaction = current_user.transactions.build
     load_data(session)
     
     respond_to do |format|
@@ -52,18 +50,56 @@ class TransactionsController < ApplicationController
     end
   end
 
+
+
   def edit
-    @transaction = Transaction.find(params[:id])
     load_data(session)
+    @editable = current_user.transactions.find(params[:id])
     respond_to do |format|
       format.js 
     end
   end
 
 
+  def update
+    transaction_hash = Transaction.createTransaction(params[:transaction], current_user)
+    transaction = current_user.transactions.find(params[:id])
+    
+    if transaction_hash == nil
+      load_data(session)
+      flash[:alert] = "Record couldn't be updated"
+      respond_to do |format|
+        format.html {render :index}
+        format.js {render :create}
+      end
+    
+    elsif transaction.update_attributes(transaction_hash)
+      load_data(session)
+      flash[:alert] = "Record updated"
+      respond_to do |format|
+        format.html {redirect_to transactions_path}
+        format.js {render :create}
+      end
+      
+    else
+
+      flash[:alert] = "Record couldn't be updated"
+      load_data(session)
+      @transaction = transaction
+      respond_to do |format|
+        format.html {render :index}
+        format.js {render :create}
+      end
+      
+    end
+  end
+
+
+
+
+
   def add_category
     load_data(session)
-    @transaction = current_user.transactions.build
     current_user.addCategory(params[:category][:title], params[:category][:transaction_type])
 
     respond_to do |format|
@@ -75,7 +111,6 @@ class TransactionsController < ApplicationController
   def filter
     load_session(params)
     load_data(session)
-    @transaction = current_user.transactions.build
     respond_to do |format|
       format.html {render :index}
       format.js {render :create}
@@ -93,6 +128,8 @@ class TransactionsController < ApplicationController
     @total_expenses = Transaction.getTotal(@expenses)
     @total_revenues = Transaction.getTotal(@revenues)
     @category = current_user.categories.build
+    @transaction = current_user.transactions.build
+    @editable = current_user.transactions.build
   end
 
 

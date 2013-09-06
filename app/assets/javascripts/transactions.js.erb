@@ -2,9 +2,9 @@ $(function() {
 	      
     
     // DATEPICKER
-    $(".date_selector").datepicker({ dateFormat: "MM d, yy" });
-    $("#start_date_expense").datepicker({ dateFormat: "MM d, yy" });
-    $("#end_date_expense").datepicker({ dateFormat: "MM d, yy" });
+    $(".date_selector").datepicker({ dateFormat: "MM dd, yy" });
+    $("#start_date_expense").datepicker({ dateFormat: "MM dd, yy" });
+    $("#end_date_expense").datepicker({ dateFormat: "MM dd, yy" });
 
     // TABS
     $("#tabs").tabs();
@@ -39,6 +39,7 @@ $(function() {
 	 $("ul#expenses_category_menu.menu li span").text($(this).text());
 	 $("#transaction_category_expenses").val($(this).text());
     });
+    
 
     $("ul#filter_expenses_category_menu.menu").on("click", "li ul li a", function() {
 	 $("ul#filter_expenses_category_menu.menu li span").text($(this).text());
@@ -91,5 +92,5 @@ $(function() {
     });
    
 
-   	 
+    
 });

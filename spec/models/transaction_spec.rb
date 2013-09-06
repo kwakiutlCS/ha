@@ -187,25 +187,31 @@ describe Transaction do
       it "deals with multiple . format" do
         hash ={"value"=>"34.0.2.5", "qty"=>"4"}
         result = Transaction.createTransaction(hash, user)
-        result["value_cents"].should == nil
+        result.should == nil
       end 
 
       it "deals with multiple , format" do
         hash ={"value"=>"34,1,0", "qty"=>"4"}
         result = Transaction.createTransaction(hash, user)
-        result["value_cents"].should == nil
+        result.should == nil
       end 
 
       it "deals with multiple ., format" do
         hash ={"value"=>"34.1,0", "qty"=>"4"}
         result = Transaction.createTransaction(hash, user)
-        result["value_cents"].should == nil
+        result.should == nil
       end 
 
        it "deals with multiple ,. format" do
         hash ={"value"=>"34,1.0", "qty"=>"4"}
         result = Transaction.createTransaction(hash, user)
-        result["value_cents"].should == nil
+        result.should == nil
+      end 
+
+      it "deals with large decimal places" do
+        hash ={"value"=>"34.235684", "qty"=>"4"}
+        result = Transaction.createTransaction(hash, user)
+        result["value_cents"].should == "3423"
       end 
 
     end

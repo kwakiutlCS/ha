@@ -1,3 +1,4 @@
+
 $('#expenses_table').html("<%= escape_javascript(render(:partial => 'expenses')) %>");
 $("form")[0].reset();
 
@@ -19,3 +20,10 @@ $("#date_expense_select_fields").val("<%= session[:date] %>");
     if ($("#date_expense_select_fields").val() == "custom") {
       $("#custom_date_expense_fields").show();
     }  
+
+$("#alert").html("<%= flash[:alert] %>");
+<% flash.delete(:alert) %>
+$("#notice").html("<%= flash[:notice] %>");
+<% flash.delete(:notice) %>
+
+$("#expense_edit_form").hide();

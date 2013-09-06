@@ -1,6 +1,17 @@
 $('#expense_edit_form').html("<%= escape_javascript(render(:partial => 'editexpense')) %>");
 
+$("#edit_transaction_value_expense").val("<%= @editable.value_cents/100.0 %>");
+$("#edit_transaction_date_expense").val("<%= @editable.date.strftime('%B %d, %Y') %>");
+$("#edit_expenses_category_menu span").text("<%= @editable.category.capitalize %>");
+$("#edit_transaction_category_expenses").val("<%= @editable.category %>");
+
 $("#expense_edit_form").show();
 
 
 $("#edit_expenses_category_menu").menu();
+$(".date_selector").datepicker({ dateFormat: "MM dd, yy" });
+
+$("ul#edit_expenses_category_menu.menu").on("click", "li ul li a", function() {
+    	$("ul#edit_expenses_category_menu.menu li span").text($(this).text());
+	 $("#edit_transaction_category_expenses").val($(this).text());
+    });

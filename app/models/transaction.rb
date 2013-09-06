@@ -26,12 +26,18 @@ class Transaction < ActiveRecord::Base
     hash.each do |k,v|
       if k == "value" 
         v = convertMoneyToCents(v)
-        return nil if v != nil && v.length >= 12
+        return nil if v == nil || v.length >= 12
         result["value_cents"] = v
       elsif k == "category"
         if v
           cat = user.categories.where(title: v.downcase).limit(1)
           result["category_id"] = cat.first.id if cat.count == 1
+        end
+      elsif k == "date"
+        begin
+          result["date"] = Date.parse(v) ? v : nil        
+        rescue
+          return nil
         end
       else
         result[k] = v
@@ -55,9 +61,16 @@ class Transaction < ActiveRecord::Base
   end
 
   def self.convertMoneyToCents(v)
+    return nil if v.length > 13
     if v =~ /\..*\./ or v =~ /,.*,/ or v =~ /\..*,/ or v =~ /,.*\./ 
-      v = nil
-    elsif v == ""
+      return nil
+    end
+  
+    while v =~ /\d*\.\d{3}/
+      v = v[0,v.length-1]
+    end
+
+    if v == ""
       return "0"
     elsif v =~ /\d*\.\d\d/
       v = v.sub(".","")
@@ -74,9 +87,9 @@ class Transaction < ActiveRecord::Base
     elsif v =~ /\d+/
       v = v+"00"
     else
-      v = nil
+      return nil
     end
-    while v != nil && v[0] == "0"
+    while v[0] == "0"
       v = v[1,v.length-1]
     end
     v
