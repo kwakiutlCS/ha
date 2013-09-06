@@ -11,6 +11,6 @@ Feature: Signing up
 	  Then I should see "Sign in"
 	  When I press "Sign up"
 	  Then I should see "successfully"
-	  And I should see "Signed in as palerma"
+	  And I should see "Palerma"
 	  But I should not see "Sign in"
 	  And I should not see "Sign up"

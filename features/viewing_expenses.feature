@@ -25,13 +25,13 @@ Feature: view expenses
 	  Then I should not see "$15.26"
 	  But I should see "$25.26"
 
+	  @javascript
 	  Scenario: view session transactions
 	  Given I am on the homepage
 	  And I am signed in as "palerma"
 	  When I follow "Transactions"
 	  Then I should not see "$15.26"
 	  When I select "Current Year" from "date_expense_select_fields"
-	  And I press "Filter"
 	  Then I should see "$15.26"
 	  When I am on the homepage
 	  And I follow "Transactions"

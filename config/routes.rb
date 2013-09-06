@@ -6,6 +6,8 @@ Ha::Application.routes.draw do
       get :filter
     end
   end
+
+  resources :trend_reports
   
   root to: "static_pages#index"
   

@@ -10,5 +10,33 @@ body {
 -moz-user-select: -moz-none;
 -ms-user-select: none;
 user-select: none;
+	      margin: 0;
 }
 
+
+nav ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+
+}
+
+nav ul li {
+    display: inline;
+    margin: 10px;
+}
+
+header {
+	background: #FFFFFF;
+	border: 1px solid black;
+	border-radius: 5px;
+	width: 1080px;
+	height: 40px;
+	line-height: 40px;
+	margin-left: 40px;
+	
+}
+
+nav {
+    float: right;
+}

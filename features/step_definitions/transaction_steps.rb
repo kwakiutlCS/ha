@@ -3,6 +3,7 @@ Given(/^the following transactions exist:$/) do |table|
     user = User.where(name: t.delete("user")).first
     x = user.transactions.build(t)
     x.save
-    
-  end
+    end
+  
+  
 end

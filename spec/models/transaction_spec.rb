@@ -121,7 +121,7 @@ describe Transaction do
         CategoryMap.create(user_id: user.id, category_id: c.id)
         hash ={"value" => "0.33", "qty" => "4", "category" => "groceries"}
         result = Transaction.createTransaction(hash, user)
-        result["category_id"].should == 1
+        result["category_id"].should == c.id
       end
 
       
@@ -219,6 +219,9 @@ describe Transaction do
 
   describe "self.getTotal" do
     it "returns the sum of a collection of transactions" do
+      Transaction.all.each do |t|
+        t.destroy
+      end
       t1 = FactoryGirl.create(:transaction, value_cents: "3425")
       t2 = FactoryGirl.create(:transaction, value_cents: "332")
       Transaction.getTotal(Transaction.all).should == "$37.57"

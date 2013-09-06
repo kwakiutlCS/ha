@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   attr_accessible :title, :transaction_type
 
-  validates :title, presence: true
+  validates :title, presence: true, length: {maximum: 50}
   validates :transaction_type, inclusion: {in: [false, true]}
   validate :title_uniqueness
   

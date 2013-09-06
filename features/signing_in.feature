@@ -11,6 +11,6 @@ Feature: Signing in
 	  And I fill in "Name" with "palermafd"
 	  And I fill in "Password" with "password"
 	  When I press "Sign in"
-	  Then I should see "Signed in as palerma"
+	  Then I should see "Palerma"
 	  But I should not see "Sign in"
 	  And I should not see "Sign up"

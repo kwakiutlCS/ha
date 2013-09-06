@@ -1,0 +1,13 @@
+class CreateTrendReports < ActiveRecord::Migration
+  def change
+    create_table :trend_reports do |t|
+      t.text :x-data
+      t.text :y-data
+      t.string :x-label
+      t.string :y-label
+      t.string :title
+
+      t.timestamps
+    end
+  end
+end

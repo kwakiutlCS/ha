@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe Category do
@@ -14,6 +15,12 @@ describe Category do
       category.should_not be_valid
     end
 
+    it "has a maximum size title" do
+      category.title = "123456789poiuytrewqasdfghjklgmnqwertyuioppoiuytrewqq"
+      category.should_not be_valid
+    end
+
+
     it "has a non blank title" do
       category.title = ""
       category.should_not be_valid
@@ -24,7 +31,7 @@ describe Category do
       other = FactoryGirl.build(:category, title: "mytitle", transaction_type: false)
       other.should_not be_valid
     end
-
+    
     
     it "has an irrelevant title for different transaction_types" do
       category.save

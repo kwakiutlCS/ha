@@ -8,16 +8,23 @@
 </head>
 <body>
 
+<header>
 <nav>
   <% if user_signed_in? %>
-  Signed in as <%= current_user.name %>
-  <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+  <ul>
+    <li><%= link_to "Transactions", transactions_path %></li>
+    <li><%= link_to "Reports", trend_reports_path %></li>
+    <li><%= current_user.name.capitalize %></li>
+    <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+  </ul>
+  
   <% else %>
   <%= link_to "Sign in", new_user_session_path %>
   <%= link_to "Sign up", new_user_registration_path %>
   <% end %>
 
 </nav>
+</header>
 
 <p id="alert">
   <%= flash[:alert] %>
@@ -27,7 +34,9 @@
 </p>
 
 
+<section id="main_content">
 <%= yield %>
+</section>
 
 </body>
 </html>

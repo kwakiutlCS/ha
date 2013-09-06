@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
 
-  validates :name, presence: true, uniqueness: true, length: {minimum: 3}
+  validates :name, presence: true, uniqueness: true, length: {minimum: 3, maximum: 15}
   validates :email, presence: true, uniqueness: true 
 
   has_many :category_maps, dependent: :destroy

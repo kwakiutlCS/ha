@@ -24,6 +24,11 @@ describe User do
       user.name = "ze"
       user.should_not be_valid
     end
+
+    it "has a maximum size of 15" do
+      user.name = "qwertyuiopasdfgh"
+      user.should_not be_valid
+    end
   end
 
   describe "#email" do
@@ -118,7 +123,7 @@ describe User do
     it "gets the correct less than a month" do
       p = {filter_category: "All",date: "month"}
       c = user.getExpenses(p)
-      c.count.should == 2
+      c.count.should == 3
     end
 
     it "gets the correct less than a week" do
