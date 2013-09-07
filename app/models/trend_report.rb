@@ -13,6 +13,18 @@ class TrendReport < ActiveRecord::Base
 
 
   def self.getReport(user, options = {})
-    user.transactions.where(:transaction_type: false)
+    data = user.transactions.where("date > ?", (Date.today-1.year).beginning_of_month).group_by {|i| i.date.beginning_of_month}
+    data.each do |k,v|
+      data[k] = v.inject(0) {|sum, i| sum+i.value_cents/100.to_f}
+    end
+    
+    report = TrendReport.new
+    report.x_data = data.keys.sort
+    report.y_data = []
+    report.x_data.each do |i|
+      report.y_data << data[i].round(2)
+    end
+
+    report
   end
 end
