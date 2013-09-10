@@ -1,6 +1,6 @@
 $(function() {
 	      
-    alert(3);
+    
     // DATEPICKER
     $(".date_selector").datepicker({ dateFormat: "MM dd, yy" });
     $("#start_date_expense").datepicker({ dateFormat: "MM dd, yy" });
