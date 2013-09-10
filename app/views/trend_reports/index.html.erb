@@ -1,2 +1,29 @@
-<%= p @report.x_data %>
-<%= p @report.y_data %>
+
+
+<div id="placeholder" style="width:600px; height:400px;"></div>
+
+<script>
+  $(document).ready(function() {
+  $.plot($("#placeholder"), [
+    {
+     data: <%= @report.y_data %>,
+     bars: {show: true, barWidth: 0.6, align: "center"}, 
+    }
+  ],
+
+  {
+  xaxis :{
+  ticks: <%= raw(@ticks) %>
+  },
+
+  grid: {
+  backgroundColor: "white",
+  
+  }
+  }
+
+ 
+  
+  );
+  });
+</script>
