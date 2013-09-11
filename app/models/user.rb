@@ -90,9 +90,10 @@ class User < ActiveRecord::Base
 
   private
   def add_initial_categories
-    initial_categories = [21,22,23,24,25]
+    initial_categories = ["food", "health", "groceries", "utilities", "electricity"]
     initial_categories.each do |i|
-      CategoryMap.create(user_id: self.id, category_id: i)
+      cat_id = Category.where(title: i, transaction_type: false).first.id
+      CategoryMap.create(user_id: self.id, category_id: cat_id)
     end
         
   end

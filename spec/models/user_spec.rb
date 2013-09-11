@@ -5,9 +5,14 @@ describe User do
   it {should respond_to(:email)}
   it {should respond_to(:categories)}
 
-
+  before(:each) do
+    initial_categories = ["food", "health", "groceries", "utilities", "electricity"]
+    initial_categories.each do |i|
+      Category.create(title: i, transaction_type: false)
+    end
+    
+  end
   let(:user) {FactoryGirl.create(:user)}
-
 
   describe "#name" do
     it "is not nil" do
@@ -74,14 +79,16 @@ describe User do
     end
 
     it "returns nil if user already has category" do
+      a=user.categories.count
       user.addCategory("car", "false")
       c = user.addCategory("car", "false")
-      user.categories.count.should == 1
+      user.categories.count.should == a+1
     end
     it "adds category if user already has category but different transaction types" do
+      a=user.categories.count
       user.addCategory("car", "false")
       c = user.addCategory("car", "true")
-      user.categories.count.should == 2
+      user.categories.count.should == 2+a
     end
   end
   
@@ -89,9 +96,9 @@ describe User do
   describe "#getExpenses" do
     before(:each) do
       user.addCategory("car","false")
-      c1 = user.categories.last
+      c1 = user.categories.where(title: "car").first
       user.addCategory("food", "false")
-      c2 = user.categories.last
+      c2 = user.categories.where(title: "food").first
       
       FactoryGirl.create(:transaction, user_id: user.id, category_id: c1.id, date: Date.today-2.year)
       FactoryGirl.create(:transaction, user_id: user.id, category_id: c2.id, date: Date.today-2.months)
@@ -156,4 +163,6 @@ describe User do
       c.count.should == 5
     end
   end
+
+  
 end

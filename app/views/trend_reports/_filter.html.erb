@@ -1,0 +1,33 @@
+<%= form_tag(trend_reports_path, method: "get") do %>
+
+<%= hidden_field_tag :category, "All"  %>
+<label>Category: </label> 
+
+<div class="menu_wrapper">
+<ul class="menu" id="trendPlotCategoryMenu">
+  <li> <span>All</span>
+    <ul class="submenu">
+      <li><a href="#">All</a></li>
+      <li><a href="#">No Category</a></li>
+      <% current_user.categories.each do |c| %>
+      <% if c.transaction_type == false %>
+      <li><a href="#"><%= c.title.capitalize %></a></li>
+      <% end %>
+      <% end %>
+    </ul>
+</ul>
+</div>
+
+<%= select_tag(:period, options_for_select([["Daily", "day"],["Weekly", "week"],["Monthly", "month"],["Yearly", "year"]],"month") ) %>
+
+<label>Start Date</label>
+<%= text_field_tag(:trendStartDate) %>
+
+<label>End Date</label>
+<%= text_field_tag(:trendEndDate) %>
+
+
+
+<%= submit_tag "Filter" %>
+
+<% end %>

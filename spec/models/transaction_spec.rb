@@ -7,7 +7,13 @@ describe Transaction do
   it {should respond_to :description}
   it {should respond_to :date}
   it {should respond_to :transaction_type}
-
+  before(:each) do
+    initial_categories = ["food", "health", "groceries", "utilities", "electricity"]
+    initial_categories.each do |i|
+      Category.create(title: i, transaction_type: false)
+    end
+    
+  end
 
   let(:transaction) {FactoryGirl.create(:transaction)}
   let(:user) {User.find(transaction.user_id)}
@@ -117,7 +123,7 @@ describe Transaction do
       end
 
       it "should return the correct category id" do
-        c = Category.create(title: "groceries", transaction_type: false)
+        c = user.categories.where(title: "groceries").first
         CategoryMap.create(user_id: user.id, category_id: c.id)
         hash ={"value" => "0.33", "qty" => "4", "category" => "groceries"}
         result = Transaction.createTransaction(hash, user)

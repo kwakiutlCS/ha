@@ -1,0 +1,10 @@
+
+<div id="trendPlotDiv" style="background:#FFF">
+  <div id="trendPlotTitle"><%= @report.title %></div>
+  <div id="trendPlotArea" style="height:400px; "></div>
+</div>
+
+<div id="trendPlotFilter">
+  <%= render "filter" %>
+</div>
+

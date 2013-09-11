@@ -16,7 +16,13 @@ describe CategoryMap do
   end
 
   it "is destroyed when user is destroyed" do
+    initial_categories = ["food", "health", "groceries", "utilities", "electricity"]
+    initial_categories.each do |i|
+      Category.create(title: i, transaction_type: false)
+    end
     c = FactoryGirl.create(:user)
+    
+  
     m = CategoryMap.create(user_id: c.id, category_id: 3)
     id = m.id
     c.destroy

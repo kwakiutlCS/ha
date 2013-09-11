@@ -53,13 +53,7 @@ describe TrendReport do
   end
 
   describe "self.getReport" do
-    before(:each) do
-      initial_categories = ["food", "health", "groceries", "utilities", "electricity"]
-      initial_categories.each do |i|
-        Category.create(title: i, transaction_type: false)
-      end
     
-    end
     it "return weeks for new users" do
       user = FactoryGirl.create(:user)
       t = user.transactions.build(transaction_type: false, value_cents: 5200, date: Date.today)

@@ -1,25 +1,32 @@
 
+<div id="trendPlotDiv" style="background:#FFF">
+  <div id="trendPlotTitle"><%= @report.title %></div>
+  <div id="trendPlotArea" style="height:400px; "></div>
+</div>
 
-<div id="placeholder" style="width:600px; height:400px;"></div>
+<div id="trendPlotFilter">
+  <%= render "filter" %>
+</div>
 
 <script>
   $(document).ready(function() {
-  $.plot($("#placeholder"), [
+  $.plot($("#trendPlotArea"), [
     {
+     color: "orange",
      data: <%= @report.y_data %>,
-     bars: {show: true, barWidth: 0.6, align: "center"}, 
+     bars: {show: true, barWidth: 0.7, align: "center", fill: 0.6}, 
     }
   ],
 
   {
   xaxis :{
-  ticks: <%= raw(@ticks) %>
+  ticks: <%= raw(@ticks) %>,
+  min: 0,
+  max: <%= @report.x_data.count+1 %>,
+  
   },
 
-  grid: {
-  backgroundColor: "white",
   
-  }
   }
 
  
