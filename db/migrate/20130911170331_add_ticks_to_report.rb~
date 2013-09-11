@@ -1,0 +1,5 @@
+class AddTicksToReport < ActiveRecord::Migration
+  def change
+    add_column :reports, :ticks, :text
+  end
+end

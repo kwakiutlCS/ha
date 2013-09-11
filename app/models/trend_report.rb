@@ -1,5 +1,5 @@
 class TrendReport < ActiveRecord::Base
-  attr_accessible :title, :x_data, :x_label, :y_data, :y_label, :period
+  attr_accessible :title, :x_data, :x_label, :y_data, :y_label, :period, :ticks
 
   validates :title, presence: true
   validates :y_label, presence: true
@@ -9,17 +9,20 @@ class TrendReport < ActiveRecord::Base
   
   serialize :x_data
   serialize :y_data
+  serialize :ticks
 
 
 
   def self.getReport(user, options = {})
     return false if user.transactions.empty?
-
+    
     if options[:trendStartDate]
       startDate = Date.parse(options[:trendStartDate])
     else
       firstRecordDate = user.transactions.where(transaction_type: false).order("date").limit(1).first.date 
-      if firstRecordDate < Date.today-1.year
+      if options[:period] == "year"
+        startDate = firstRecordDate
+      elsif firstRecordDate < Date.today-1.year
         startDate = Date.today-1.year
       elsif firstRecordDate < (Date.today-2.months).beginning_of_month
         startDate = firstRecordDate.beginning_of_month
@@ -28,17 +31,22 @@ class TrendReport < ActiveRecord::Base
       end
     end
    
-    endDate = options[:trendEndDate] || Date.today
-
+    endDate = options[:trendEndDate] || Date.today.to_s
+    endDate = Date.parse(endDate)
+    
     period = options[:period] || (startDate < (Date.today-2.months).beginning_of_month ? "month" : "week")
     
-    category_id = options[:category_id] || "all"
+    category = options[:category] || "All"
     
-    
-    if category_id == "all"
-      data = user.transactions.where("date >= ? and date <= ?", startDate, endDate).group_by {|i| i.date.send("beginning_of_#{period}")}
+    if category == "All" 
+      data = user.transactions.where("date >= ? and date <= ? and transaction_type = ?", startDate, endDate, false).group_by {|i| i.date.send("beginning_of_#{period}")}
+      
+    elsif category == "No Category"
+      data = user.transactions.where("date >= ? and date <= ? and category_id is NULL and transaction_type = ?", startDate, endDate, false).group_by {|i| i.date.send("beginning_of_#{period}")}
+      
     else
-      data = user.transactions.where("date >= ? and date <= ? and category_id = ?", startDate, endDate, category_id).group_by {|i| i.date.send("beginning_of_#{period}")}
+      category_id = user.categories.where(title: category.downcase).first
+      data = user.transactions.where("date >= ? and date <= ? and category_id = ? and transaction_type = ?", startDate, endDate, category_id, false).group_by {|i| i.date.send("beginning_of_#{period}")}
     end
 
     data.each do |k,v|

@@ -102,22 +102,25 @@ describe TrendReport do
 
     it "returns all values with no category params" do
       user = FactoryGirl.create(:user)
-      c = user.categories.build(title:"food", transaction_type:false)
-      c.save
+      c = user.categories.where(title:"food", transaction_type:false).first
       t = user.transactions.build(transaction_type: false, value_cents: 5200, date: Date.today, category_id: c.id)
       t.save
+      
       report = TrendReport.getReport(user)
+      
       report.y_data.last[1].should == 52
     end
 
     it "returns correct values with category params" do
       user = FactoryGirl.create(:user)
-      c = user.categories.build(title:"food", transaction_type:false)
-      c.save
-      t = user.transactions.build(transaction_type: false, value_cents: 5200, date: Date.today, category_id: c.id)
+      c = user.categories.where(title:"food", transaction_type:false).first
+      
+      t = user.transactions.build(transaction_type: false, value_cents: 5200, date: Date.today, category_id: c.id+1)
       t.save
-      report = TrendReport.getReport(user, {category_id: 0})
-      report.y_data.should == []
+      t = user.transactions.build(transaction_type: false, value_cents: 1500, date: Date.today, category_id: c.id)
+      t.save
+      report = TrendReport.getReport(user, {category: "Food"})
+      report.y_data.should == [[1,15]]
     end
 
     it "limits the data to 1 year with old users" do

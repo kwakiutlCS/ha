@@ -1,16 +1,23 @@
-
-<div id="trendPlotDiv" style="background:#FFF">
-  <div id="trendPlotTitle"><%= @report.title %></div>
-  <div id="trendPlotArea" style="height:400px; "></div>
-</div>
-
-<div id="trendPlotFilter">
-  <%= render "filter" %>
-</div>
-
-<script>
+<script type="text/javascript">
   $(document).ready(function() {
-  $.plot($("#trendPlotArea"), [
+  $("#trendPlotCategoryMenu li span").html("<%= session[:category] %>");
+  $("#trendPlotCategoryField").html("<%= session[:category] %>");
+  $("#trendPlotPeriodField").val("<%= session[:period] %>");
+  $("#trendPlotStartDateField").val("<%= session[:trendStartDate] %>");
+  $("#trendPlotEndDateField").val("<%= session[:trendEndDate] %>");
+
+  $("#trendPlotStartDateField").datepicker({ dateFormat: "MM dd, yy" });
+  $("#trendPlotEndDateField").datepicker({ dateFormat: "MM dd, yy" });
+  
+  $("ul#trendPlotCategoryMenu.menu").on("click", "li ul li a", function() {
+  
+	 $("ul#trendPlotCategoryMenu.menu li span").text($(this).text());
+	 $("#trendPlotCategoryField").val($(this).text());
+  });
+
+
+  
+$.plot($("#trendPlotArea"), [
     {
      color: "orange",
      data: <%= @report.y_data %>,
@@ -29,8 +36,19 @@
   
   }
 
- 
-  
   );
+
   });
 </script>
+
+
+
+<div id="trendPlotDiv" style="background:#FFF">
+  <div id="trendPlotTitle"><%= @report.title %></div>
+  <div id="trendPlotArea" style="height:400px; "></div>
+</div>
+
+<div id="trendPlotFilter">
+  <%= render "filter" %>
+</div>
+

@@ -3,8 +3,8 @@ class TrendReportsController < ApplicationController
 
   def index
     load_session(params)
-    if session[:period] != params[:period] || session[:trendStartDate] != params[:trendStartDate] || session[:trendEndDate] != params[:trendEndDate] || session[:category_id] != params[:category_id] 
-      redirect_to trend_reports_path({period: session[:period], trendStartDate: session[:trendStartDate], trendEndDate: session[:trendEndDate], category_id: session[:category_id]})
+    if session[:period] != params[:period] || session[:trendStartDate] != params[:trendStartDate] || session[:trendEndDate] != params[:trendEndDate] || session[:category] != params[:category] 
+      redirect_to trend_reports_path({period: session[:period], trendStartDate: session[:trendStartDate], trendEndDate: session[:trendEndDate], category: session[:category]})
     end
 
     @report = TrendReport.getReport(current_user, session)
@@ -29,6 +29,6 @@ class TrendReportsController < ApplicationController
     session[:period] = p[:period] if p[:period] 
     session[:trendStartDate] = p[:trendStartDate] == "" ? nil : p[:trendStartDate] 
     session[:trendEndDate] = p[:trendEndDate] == "" ? nil : p[:trendEndDate] 
-    session[:category_id] = p[:category_id] if p[:category_id]
+    session[:category] = p[:category] if p[:category]
   end
 end

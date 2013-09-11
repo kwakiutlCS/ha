@@ -1,6 +1,6 @@
 <%= form_tag(trend_reports_path, method: "get") do %>
 
-<%= hidden_field_tag :category, "All"  %>
+<%= hidden_field_tag :category, "All", id: "trendPlotCategoryField"  %>
 <label>Category: </label> 
 
 <div class="menu_wrapper">
@@ -18,13 +18,14 @@
 </ul>
 </div>
 
-<%= select_tag(:period, options_for_select([["Daily", "day"],["Weekly", "week"],["Monthly", "month"],["Yearly", "year"]],"month") ) %>
+<label> Report Periodicity </label>
+<%= select_tag(:period, options_for_select([["Daily", "day"],["Weekly", "week"],["Monthly", "month"],["Yearly", "year"]],"month"), id: "trendPlotPeriodField") %>
 
 <label>Start Date</label>
-<%= text_field_tag(:trendStartDate) %>
+<%= text_field_tag :trendStartDate, "", id:"trendPlotStartDateField" %>
 
 <label>End Date</label>
-<%= text_field_tag(:trendEndDate) %>
+<%= text_field_tag :trendEndDate, "", id:"trendPlotEndDateField" %>
 
 
 
