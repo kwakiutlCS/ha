@@ -59,10 +59,24 @@ class TrendReport < ActiveRecord::Base
     report.x_data.each_with_index do |i,index|
       report.y_data << [index+1,data[i].round(2)]
     end
-    
+
+    report.period = period
+    report.ticks = []
+
+    tickCounter = report.x_data.count 
+    ticksStep = tickCounter/10+1
+    date_format = {"year" => '%Y', "month" => '%b, %Y', "week" => '%b %e', "day" => '%b %e' }
+    counter = 0
+    tickCounter.times do
+      if (counter)%ticksStep == 0
+        report.ticks << [counter+1, "#{report.x_data[counter].strftime(date_format[period])}"]
+      end
+      counter += 1
+    end
+
     report.y_label = "$"
     report.title = "Total Expenses per #{period.capitalize}"
-    report.period = period
+    
 
     report
   end

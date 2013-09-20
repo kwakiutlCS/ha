@@ -2,6 +2,7 @@ Feature: Delete Transaction
 
 	  
 	  Scenario:
+	  Given the initial categories exist
 	  Given the following users exist:
 	  |name|email|password|
 	  |palerma|k2543@k.pt|password|

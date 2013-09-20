@@ -8,16 +8,7 @@ class TrendReportsController < ApplicationController
     end
 
     @report = TrendReport.getReport(current_user, session)
-    if @report
-      tickCounter = @report.x_data.count
-      @ticks = []
-      counter = 1
-      date_format = {"year" => '%Y', "month" => '%b, %Y', "week" => '%x', "day" => '%b %e' }
-      tickCounter.times do
-        @ticks << [counter, "#{@report.x_data[counter-1].strftime(date_format[@report.period])}"]
-        counter += 1
-      end
-    else
+    unless @report
       render :no_report
     end
   end

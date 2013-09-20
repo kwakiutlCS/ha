@@ -5,6 +5,7 @@ Feature: Hidden links
 	  Then I should not see "Transactions"
 
 	  Scenario:
+	  Given the initial categories exist
 	  Given the following users exist:
 	  |name|email|password|
 	  |trengo|df@jf.pt|password|

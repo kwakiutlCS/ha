@@ -2,6 +2,7 @@ Feature: Create Transaction
 
 	  
 	  Scenario: normal
+	  Given the initial categories exist
 	  Given the following users exist:
 	  |name|email|password|
 	  |palerma57|k2543@k.pt|password|
@@ -13,6 +14,7 @@ Feature: Create Transaction
 	  Then I should see "$15.99"
 
 	  Scenario: large ammount
+	  Given the initial categories exist
 	  Given the following users exist:
 	  |name|email|password|
 	  |palerma57|k2543@k.pt|password|

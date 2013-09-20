@@ -1,6 +1,7 @@
 Feature: Sign out
 
 	  Scenario:
+	  Given the initial categories exist
 	  Given the following users exist:
 	  |name|email|password|
 	  |palermafd|kfd@k.pt|password|
