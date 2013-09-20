@@ -2,6 +2,7 @@ Feature: Signing up
 	  
 
 	  Scenario: Sign up
+	  Given the initial categories exist
 	  Given I am on the homepage
 	  When I follow "Sign up"
 	  And I fill in "Name" with "palerma"

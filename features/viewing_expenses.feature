@@ -2,13 +2,10 @@ Feature: view expenses
 
 
 	  Background:
+	  Given the initial categories exist
 	  Given the following users exist:
 	  |name|email|password|
 	  |palerma|sjfk@kjlwfg.com|password|
-	  And the following categories exist:
-	  |title|transaction_type|
-	  |food|false|
-	  |health|false|
 	  And "palerma" has all the categories
 	  And the following transactions exist:
 	  |date|transaction_type|value_cents|user|

@@ -1,7 +1,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
-  $("#trendPlotCategoryMenu li span").html("<%= session[:category] %>");
-  $("#trendPlotCategoryField").html("<%= session[:category] %>");
+  $("#trendPlotCategoryMenu li span").html("<%= session[:category] || 'All' %>");
+  $("#trendPlotCategoryField").html("<%= session[:category] || 'All' %>");
   $("#trendPlotPeriodField").val("<%= session[:period] %>");
   $("#trendPlotStartDateField").val("<%= session[:trendStartDate] %>");
   $("#trendPlotEndDateField").val("<%= session[:trendEndDate] %>");

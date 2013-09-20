@@ -1,7 +1,11 @@
 
 Given(/^the following users exist:$/) do |table|
+  
   table.hashes.each do |a|
-    @user = FactoryGirl.create(:user, a)
+    
+    user = FactoryGirl.create(:user, a)
+    
+    
   end
 end
 

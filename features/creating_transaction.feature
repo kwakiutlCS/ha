@@ -9,7 +9,7 @@ Feature: Create Transaction
 	  And I am on the homepage
 	  When I follow "Transactions"
 	  And I fill in "transaction_value_expense" with "15.99"
-	  And within "#expenses" I press "Create Transaction"
+	  And within "#new_transaction_expense" I press "Create Transaction"
 	  Then I should see "$15.99"
 
 	  Scenario: large ammount
@@ -20,6 +20,6 @@ Feature: Create Transaction
 	  And I am on the homepage
 	  When I follow "Transactions"
 	  And I fill in "transaction_value_expense" with "1000000000"
-	  And within "#expenses" I press "Create Transaction"
-	  Then I should not see "$"
-	  And I should see "This value is too large"
+	  And within "#new_transaction_expense" I press "Create Transaction"
+	  Then I should not see "$1000000000"
+	  
