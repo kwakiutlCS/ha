@@ -19,7 +19,7 @@ class TrendReport < ActiveRecord::Base
     if options[:trendStartDate]
       startDate = Date.parse(options[:trendStartDate])
     else
-      firstRecordDate = user.transactions.where(transaction_type: false).order("date").limit(1).first.date 
+      firstRecordDate = user.transactions.where(transaction_type: false).order("date").first.date 
       if options[:period] == "year"
         startDate = firstRecordDate
       elsif firstRecordDate < Date.today-1.year
@@ -28,6 +28,7 @@ class TrendReport < ActiveRecord::Base
         startDate = firstRecordDate.beginning_of_month
       else
         startDate = firstRecordDate.beginning_of_week
+        
       end
     end
    
@@ -77,8 +78,7 @@ class TrendReport < ActiveRecord::Base
     report.y_label = "$"
     report.title = "Total Expenses per #{period.capitalize}"
     
-
-    report
+    [report, startDate]
   end
 
 

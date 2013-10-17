@@ -15,6 +15,7 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.tabs
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require_tree .
 //= require_tree ../../../vendor
 

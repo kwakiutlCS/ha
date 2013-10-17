@@ -1,6 +1,4 @@
-<script type="text/javascript">
-  $(document).ready(function() {
-  $("#trendPlotCategoryMenu li span").html("<%= session[:category] || 'All' %>");
+$("#trendPlotCategoryMenu li span").html("<%= session[:category] || 'All' %>");
   $("#trendPlotCategoryField").html("<%= session[:category] || 'All' %>");
   $("#trendPlotPeriodField").val("<%= session[:period] || 'month' %>");
   $("#trendPlotStartDateField").val("<%= session[:trendStartDate] || (Date.today.beginning_of_month-1.year).strftime('%B %d, %Y') %>");
@@ -33,18 +31,3 @@ $.plot($("#trendPlotArea"), [
   }
 
   );
-
-  });
-</script>
-
-
-
-<div id="trendPlotDiv" style="background:#FFF">
-  <div id="trendPlotTitle"><%= @report.title %></div>
-  <div id="trendPlotArea" style="height:400px; "></div>
-</div>
-
-<div id="trendPlotFilter">
-  <%= render "filter" %>
-</div>
-
